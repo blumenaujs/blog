@@ -1,0 +1,17 @@
+# O primeiro autor deve ser sempre o blumenauJS
+- name: BlumenauJS
+  bio: |
+    Comunidade de JavasScript de blumenau.
+  avatar: ./avatars/blumenau-js.jpg
+  featured: true
+  social:
+    - name: github
+      url: https://github.com
+    - name: twitter
+      url: https://github.com
+    - name: instagram
+      url: https://github.com
+    - name: dribbble
+      url: https://github.com
+    - name: linkedin
+      url: https://github.com
