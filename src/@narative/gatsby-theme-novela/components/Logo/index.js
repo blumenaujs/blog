@@ -1,31 +1,15 @@
-import React from "react";
-import styled from "@emotion/styled";
-import mediaqueries from "@styles/media";
+import React from 'react'
 
-import LargeLogo from "../../../../assets/logo.svg";
-import MobileLogo from "../../../../assets/mobile-logo.svg";
+import { DesktopLogo } from './DesktopLogo'
+import { MobileLogo } from './MobileLogo'
 
-const Logo = () => (
-  <LogoContainer>
-    <img className="Logo__Desktop" src={LargeLogo} alt="" />
-    <img className="Logo__Mobile" src={MobileLogo} alt="" />
-  </LogoContainer>
-);
+const getColor = fill => fill === '#000' ? '#515050' : '#fff'
 
-const LogoContainer = styled.div`
-  .Logo__Mobile {
-    display: none;
-  }
+const Logo = ({ fill }) => (
+  <>
+    <DesktopLogo fill={getColor(fill)} />
+    <MobileLogo fill={getColor(fill)} />
+  </>
+)
 
-  ${mediaqueries.tablet`
-    .Logo__Desktop {
-      display: none;
-    }
-    
-    .Logo__Mobile {
-      display: block;
-    }
-  `}
-`;
-
-export default Logo;
+export default Logo
