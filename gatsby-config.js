@@ -2,33 +2,25 @@ module.exports = {
   siteMetadata: {
     title: `BlumenauJS - Blog`,
     name: `BlumenauJS`,
-    siteUrl: `https://novela.narative.co`,
-    description: `This is my description that will be used in the meta tags and important for search results`,
+    siteUrl: `https://blog.blumenaujs.org`,
+    description: `Comunidade JavaScript de Blumenau e Região`,
     hero: {
       heading: `Heading BlumenauJS`,
       maxWidth: 652,
     },
     social: [
       {
-        name: `twitter`,
-        url: `https://twitter.com/narative`,
-      },
-      {
         name: `github`,
-        url: `https://github.com/narative`,
+        url: `https://github.com/blumenaujs`,
       },
       {
         name: `instagram`,
-        url: `https://instagram.com/narative.co`,
+        url: `https://instagram.com/blumenaujs`,
       },
       {
         name: `linkedin`,
-        url: `https://www.linkedin.com/company/narative/`,
-      },
-      {
-        name: `dribbble`,
-        url: `https://dribbble.com/narativestudio`,
-      },
+        url: `https://www.linkedin.com/company/blumenaujs/?viewAsMember=false`,
+      }
     ],
   },
   plugins: [
@@ -48,8 +40,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Novela by Narative`,
-        short_name: `Novela`,
+        name: `BlumenauJS`,
+        short_name: `BlumenauJS`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#fff`,

@@ -1,17 +1,13 @@
 # O primeiro autor deve ser sempre o blumenauJS
-- name: BlumenauJS
+- name: Marcos Oliveira
   bio: |
-    Comunidade de JavasScript de blumenau.
-  avatar: ./avatars/blumenau-js.jpg
+    Software Developer • Co-fundador do BlumenauJS
+  avatar: ./avatars/marcos.jpeg
   featured: true
   social:
     - name: github
-      url: https://github.com
+      url: https://github.com/vmarcosp
     - name: twitter
-      url: https://github.com
+      url: https://twitter.com/vmaarcosp
     - name: instagram
-      url: https://github.com
-    - name: dribbble
-      url: https://github.com
-    - name: linkedin
-      url: https://github.com
+      url: https://instagram.com/vmarcosp
