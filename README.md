@@ -47,6 +47,26 @@ Para que seu post seja aceito deve respeitar as seguintes condições:
     ---
   ```
 
+## Adicionando um autor
+
+Para adicionar um author basta seguir os dois passos abaixo:
+- Adicionar seu avatar caso queira para a pasta _content/authors/avatars/_
+- Adicionar as seguintes linhas abaixo do último autor cadastrado no arquivo _content/authors/authors.yml_:
+  ```
+  ---
+  - name: Seu nome
+  bio: |
+    Uma bio
+  avatar: ./avatars/your-picture
+  featured: false
+  social:
+    - name: github
+      url: link do github
+    - name: twitter
+      url: link do twitter
+  ---
+  ```
+  Obs.: Para adicionar outros links de redes sociais não listados acima basta consultar a documentação do [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post).
 
 Caso tenha dúvidas de como utilizar mdx para escrever seu artigo pode seguir os exemplos do próprio [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post).
 
