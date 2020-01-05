@@ -1,26 +1,38 @@
-# blog
-Blog do BlumenauJS
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0b060e86-21f9-4a54-9df4-d034fe8d116c/deploy-status)](https://app.netlify.com/sites/blog-blumenaujs/deploys)
 
+<p align="center">
+  <a href="http://fw7.com.br/">
+    <img src="https://github.com/blumenaujs/site/blob/master/assets/logo.png" />
+  </a>
+</p>
 
-## Criando um novo autor
-Alterar o arquivo `content/authors/authors.yml` incluindo seus dados na seguinte estrutura:
+<h1 align="center">
+  BlumenauJS Blog
+</h1>
 
-```yml
-  - name: Seu nome
-    bio: |
-      Sua biografia
-      Pode ocupar mais de uma linha.
-    avatar: # Adicionar na pasta content/authors/avatars e importar aqui. Ex: ./avatars/minha-imagem.jpg
-    featured: true
-    social:
-      - name: github
-        url: https://github.com
-      - name: twitter
-        url: https://github.com
-      - name: instagram
-        url: https://github.com
-      - name: dribbble
-        url: https://github.com
-      - name: linkedin
-        url: https://github.com
+Este é o repositório do [blog.blumenaujs.org](https://blog.blumenaujs.org)
+
+## Sobre o projeto
+
+Este projeto foi desenvolvido com [Gatsby](https://www.gatsbyjs.org/) e utiliza o tema [Novela](https://github.com/narative/gatsby-theme-novela). 
+
+## Setup
+
+```sh
+yarn
+
+yarn develop
+
+## Open localhost:8000
 ```
+
+## Enviando um post
+
+Para enviar um post você deve fazer um _fork_ deste projeto, escrever seu post e criar um pull request.
+Para que seu post seja aceito deve respeitar as seguintes condições:
+
+- 
+
+## LICENSE
+
+MIT
