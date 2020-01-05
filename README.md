@@ -46,6 +46,7 @@ Para que seu post seja aceito deve respeitar as seguintes condições:
       excerpt: My post description
     ---
   ```
+- Enviar um PR com o título "Novo post - Título do seu artigo" 
 
 ## Adicionando um autor
 
