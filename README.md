@@ -31,7 +31,11 @@ yarn develop
 Para enviar um post você deve fazer um _fork_ deste projeto, escrever seu post e criar um pull request.
 Para que seu post seja aceito deve respeitar as seguintes condições:
 
-- 
+- Deve ter adicionado seu perfil como autor no blog - [Como adicionar meu perfil como autor](https://github.com/blumenaujs/blog#adicionando-um-autor)
+
+- Criar na pasta _content/posts/_ uma nova pasta para seu artigo seguindo o padrão de nomenclatura que é: _04-01-2020-nome-do-post_. Esta pasta deve conter a seguinte estrutura
+  - Uma pasta _images/_ para colocar as imagens do seu post
+  - Um arquivo chamado _index.mdx_ que é onde você irá seu escrever seus posts utilizando [mdx](https://github.com/mdx-js/mdx).
 
 ## LICENSE
 
