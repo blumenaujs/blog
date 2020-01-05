@@ -67,7 +67,7 @@ Para adicionar um author basta seguir os dois passos abaixo:
       url: link do twitter
   ---
   ```
-  Obs.: Para adicionar outros links de redes sociais não listados acima basta consultar a documentação do [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post).
+  _Obs.: Para adicionar outros links de redes sociais não listados acima basta consultar a documentação do [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post)_
 
 Caso tenha dúvidas de como utilizar mdx para escrever seu artigo pode seguir os exemplos do próprio [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post).
 
