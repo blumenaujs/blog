@@ -5,6 +5,6 @@ export default {
   ...novelaTheme,
   colors: {
     ...novelaTheme.colors,
-    primary: '#515050',
+    // primary: '#515050',
   }
 };
