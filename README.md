@@ -35,7 +35,7 @@ Para que seu post seja aceito deve respeitar as seguintes condições:
 
 - Criar na pasta _content/posts/_ uma nova pasta para seu artigo seguindo o padrão de nomenclatura que é: _04-01-2020-nome-do-post_. Esta pasta deve conter a seguinte estrutura
   - Uma pasta _images/_ para colocar as imagens do seu post
-  - Um arquivo chamado _index.mdx_ que é onde você irá seu escrever seus posts utilizando [mdx](https://github.com/mdx-js/mdx).
+  - Um arquivo chamado _index.mdx_ que é onde você irá escrever seu post utilizando [mdx](https://github.com/mdx-js/mdx).
   - O arquivo _index.mdx_ deve conter a seguinte estrutura
   ```
     ---
