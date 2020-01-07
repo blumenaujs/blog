@@ -35,7 +35,7 @@ Para que seu post seja aceito deve respeitar as seguintes condições:
 
 - Criar na pasta _content/posts/_ uma nova pasta para seu artigo seguindo o padrão de nomenclatura que é: _04-01-2020-nome-do-post_. Esta pasta deve conter a seguinte estrutura
   - Uma pasta _images/_ para colocar as imagens do seu post
-  - Um arquivo chamado _index.mdx_ que é onde você irá seu escrever seus posts utilizando [mdx](https://github.com/mdx-js/mdx).
+  - Um arquivo chamado _index.mdx_ que é onde você irá escrever seu post utilizando [mdx](https://github.com/mdx-js/mdx).
   - O arquivo _index.mdx_ deve conter a seguinte estrutura
   ```
     ---
@@ -67,7 +67,7 @@ Para adicionar um author basta seguir os dois passos abaixo:
       url: link do twitter
   ---
   ```
-  Obs.: Para adicionar outros links de redes sociais não listados acima basta consultar a documentação do [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post).
+  _Obs.: Para adicionar outros links de redes sociais não listados acima basta consultar a documentação do [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post)_
 
 Caso tenha dúvidas de como utilizar mdx para escrever seu artigo pode seguir os exemplos do próprio [novela theme](https://github.com/narative/gatsby-theme-novela#step-5-adding-a-post).
 
