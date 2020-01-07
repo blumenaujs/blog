@@ -5,8 +5,7 @@ module.exports = {
     siteUrl: `https://blog.blumenaujs.org`,
     description: `Comunidade JavaScript de Blumenau e Região`,
     hero: {
-      heading: `Comunidade JavaScript de Blumenau`,
-      maxWidth: 652,
+      heading: `Primeira comunidade JavaScript de Blumenau e Região`
     },
     social: [
       {
@@ -16,6 +15,10 @@ module.exports = {
       {
         name: `instagram`,
         url: `https://instagram.com/blumenaujs`,
+      },
+      {
+        name: `twitter`,
+        url: `https://twitter.com/blumenaujs`,
       },
       {
         name: `linkedin`,

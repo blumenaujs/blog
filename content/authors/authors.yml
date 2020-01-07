@@ -1,9 +1,21 @@
 # O primeiro autor deve ser sempre o blumenauJS
+- name: BlumenauJS
+  bio: |
+    Comunidade Javascript de Blumenau e Região
+  avatar: ./avatars/bnujs.png
+  featured: true
+  social:
+    - name: github
+      url: https://github.com/blumenaujs
+    - name: twitter
+      url: https://twitter.com/blumenaujs
+    - name: instagram
+      url: https://instagram.com/blumenaujs
 - name: Marcos Oliveira
   bio: |
     Software Developer • Co-fundador do BlumenauJS
   avatar: ./avatars/marcos.jpeg
-  featured: true
+  featured: false
   social:
     - name: github
       url: https://github.com/vmarcosp
