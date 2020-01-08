@@ -13,52 +13,71 @@ parte de uma série que irá falar sobre ReasonML e programação funcional_
 
 ### História
 
-**ReasonML** ou carinhosamente **Reason** não é linguagem nova e sim nova síntaxe para a linguagem [OCaml](https://ocaml.org/).
-Criada dentro do Facebook Reason é uma opção extremamente amigável a desenvolvedores JavaScript, pelo fato 
-de que o mesmo traz uma síntaxe muito similar a linguagens `C-like`.
+**ReasonML** ou carinhosamente **Reason** não é uma nova linguagem e sim uma nova síntaxe para a linguagem [OCaml](https://ocaml.org/).
+Criada dentro do Facebook, Reason é uma opção extremamente amigável a desenvolvedores JavaScript, pelo fato 
+de trazer uma síntaxe muito similar a linguagens `C-like`.
 
-### Família ML
-
-ReasonML e React não só compartilham da mesma incubadora, o Facebook, como também compartilham do mesmo criador
+ReasonML e ReactJS não só compartilham da mesma incubadora, o Facebook, como também compartilham do mesmo criador
 [Jordan Walke](https://github.com/jordwalke), que claramente tem fortes influências por linguagens da família [ML](http://www.mlworkshop.org/workshops/ml2018), Reason 
-por ser uma extensão da sintaxe de OCaml, que de forma superficial pode se dizer que é um "filho" de [StandardML](https://pt.wikipedia.org/wiki/Standard_ML) e **React** 
+por ser uma extensão da sintaxe de OCaml ( que de forma superficial pode se dizer que é um "filho" de [StandardML](https://pt.wikipedia.org/wiki/Standard_ML)) e React 
 que teve seus primeiros protótipos desenvolvidos também em **StandardML**.
 
-### ReasonML e OCaml
+### ReasonML, OCaml e JavaScript
 
-OCaml como citada acima é uma linguagem de propósito geral já consolidada, com mais de 20 anos de desenvolvimento e evolução. Criada dentro da [Inria](https://www.inria.fr/en)
+OCaml como citada acima é uma linguagem de propósito geral já consolidada, com mais de 20 anos de desenvolvimento e evolução.
+Criada dentro da [Inria](https://www.inria.fr/en)
 é uma linguagem que conta com um sistema de tipos poderoso e com um incrível suporte a inferência de tipos ([Hindley-Milner](https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system)),
-uma característica de linguagens da família ML. Pensando que ReasonML não é uma nova linguagem e sim apenas uma nova síntaxe, Reason desfruta 
-dos benefícios desta linguagem robusta e madura, contando com features
-já consolidadas como pattern matching, currying, variant types e entre outras que eu ou [Alesson]() vamos abordar de forma mais clara em um futuro artigo.
+uma característica de linguagens da família ML. O próprio facebook tem utilizado OCaml em alguns dos seus projetos como a linguagem [Flow](https://flow.org/) 
+e a linguagem [Hack](https://hacklang.org/) que  tiveram seus compiladores escritos utilizando OCaml. 
+Outras empresas também optaram por utilizar OCaml no desenvolvimento de diversos projetos, 
+alguns dos mais conhecidos são a [Bloomberg](https://www.bloomberg.com/), o famoso [Docker](https://www.docker.com/blog/docker-for-mac-windows-beta/) 
+para o desenvolvimento de aplicações nativas e [Jane Street](https://www.janestreet.com/technology/) que entre todas, é uma das que mais apoia e incentiva a evolução do ecossistema OCaml.
 
-Reason compila para JavaScript com um código extremamente legível
-através do projeto [BuckleScript](https://bucklescript.github.io/) e consequentemente pode ser utilizado de forma nativa
-através do próprio OCaml, desta forma Reason tem acesso tanto ao ecossistema JavaScript ( Front-End e NodeJS ) através da interoperabilidade com a linguagem
-e ao ecossistema OCaml na plataforma nativa. O diagrama abaixo representa bem como funciona o processo de compilação para JS 
-e OCaml:  
+Pensando que ReasonML não é uma nova linguagem e sim apenas uma nova síntaxe, Reason desfruta dos benefícios desta linguagem robusta e madura.
+Consequentemente ReasonML tem um suporte incrível a programação funcional, já que  OCaml é uma linguagem funcional. Reason pode fazer 
+de diversas features como [pattern matching](https://caml.inria.fr/pub/docs/oreilly-book/html/book-ora016.html), [currying](http://homepages.inf.ed.ac.uk/stg/NOTES/node33.html), [variants](https://v1.realworldocaml.org/v1/en/html/variants.html) e entre outras
+técnicas funcionais que eu e o [Alesson]() iremos abordar nessa série de programação funciona e ReasonML.
+
+Atualmente há duas formas de se utilizar Reason:
+ - Compilando para JavaScript (Front-End e NodeJS) através do projeto [BuckleScript](https://bucklescript.github.io/)
+ - Na plataforma nativa através de OCaml 
+ 
 
 <div className="Image__Small">
-  <img src="./images/1.png" alt="This is the alt text medium image" />
+  <img src="./images/1.png" alt="Processo compilação ReasonML" />
 </div>
 
-### JSX
+Entre as duas opções, até o momento a primeira é que tem tido maior adoção (isso se dá muito pelo tamanho da comunidade JavaScript), em relação
+ao uso de Reason como linguagem de "back-end".
+
+Falando um pouco do BuckleScript, ele é um projeto bem maduro e que nasceu antes mesmo do Reason. Ele foi criado dentro da Bloomberg e hoje já 
+conta com uma comunidade forte e ativa. Ele compila para código JavaScript (tanto utilizando a síntaxe original de OCaml, quanto utilizando a síntaxe ReasonML)
+de forma extremamente [rápida](https://bucklescript.github.io/docs/en/build-performance) e legível:
+
+```js
+var Caml_int32 = require("./stdlib/caml_int32.js");
+
+function factorial(n) {
+  var match = n <= 0;
+  if (match) {
+    return 1;
+  } else {
+    return Caml_int32.imul(n, factorial(n - 1 | 0));
+  }
+}
+
+console.log(factorial(6));
+```
+_Este é um exemplo de código compilado, retirado do [playground](https://reasonml.github.io/en/try.html?rrjsx=true&reason=PQKgBAQghgzgpgEzAewHZgBYBcsAcYBcwwATsvDlAMbIJwB0yJA5sAO4CWA1h8AGLUsTDlAA2AYgBKcKgFcSMDgDc4AfQCsABjAhgAKFFwsYEjLAAzQcLFgAvGAAUqAJR2AfHrBh0AHnubPMAB+MABGQIJvHQsrEhFRJzAAWjDnAG49PQApGHpRZGYHSyohOLEHADZndKA) do site oficial do ReasonML_
+
+Agora falando um pouco de Reason nativo, existem diversos projetos promissores e que vem evoluindo Reason como linguagem de back-end de forma muito rápida.
+O [Onivim](https://github.com/onivim/oni2) que levou a Outrun ( empresa criadora do Onivim) a criar o [Revery](https://github.com/revery-ui/revery), uma alternativa
+de alta perfomance ao Electron, totalmente construindo utilizando ReasonML. Outro caso de uso de ReasonML é o [OneGraph](https://www.onegraph.com/), que utilizou
+Reason no back-end e no front-end de seus [projetos](https://www.onegraph.com/blog/2018/07/18/OneGraph.html), o que movimentou e evoluiu muito o tooling de Reason na paltaforma nativa.
+Ainda sobre Reason nativo, existe um esforço grande do Facebook em evoluir o ecossistema no lado "native" e um bom exemplo disso é o framework de tests [Rely](https://reason-native.com/docs/rely/) que faz parte de um projeto maior o [ReNative](https://reason-native.com/).
 
 # Síntaxe
 
-## Variáveis
-
-## Functions
-
-# Sitema de tipos
-
-# ReasonML para Front-End
-
-## Interoperabilidade
-
-## BuckleScript
-
-## React
 
 
 
