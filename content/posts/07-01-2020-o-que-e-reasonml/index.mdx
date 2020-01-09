@@ -1,9 +1,9 @@
 ---
-title: O que é ReasonML ?
+title: O que é ReasonML ? Parte 1
 author: Marcos Oliveira
 date: 2020-01-07
 hero: ./images/hero.jpeg
-excerpt: Uma breve introdução a ReasonML e o seu ecossistema
+excerpt: Uma não tão breve introdução a ReasonML e o seu ecossistema
 ---
 
 **NOTA:** _Antes de começar a falar sobre o tema do artigo, quero comunicar que esse artigo é
@@ -76,8 +76,126 @@ de alta perfomance ao Electron, totalmente construindo utilizando ReasonML. Outr
 Reason no back-end e no front-end de seus [projetos](https://www.onegraph.com/blog/2018/07/18/OneGraph.html), o que movimentou e evoluiu muito o tooling de Reason na paltaforma nativa.
 Ainda sobre Reason nativo, existe um esforço grande do Facebook em evoluir o ecossistema no lado "native" e um bom exemplo disso é o framework de tests [Rely](https://reason-native.com/docs/rely/) que faz parte de um projeto maior o [ReNative](https://reason-native.com/).
 
-# Síntaxe
+# Semelhanças com JavaScript
 
+Como mencionei antes, um dos objetivos de ReasonML é trazer uma nova síntaxe para OCaml. De fato, uma síntaxe mais similar a linguagens 
+`C-like`, com certeza facilita o aprendizado, principalmente para desenvolvedores JavaScript. A seguir vou abordar de forma breve ( pelo menos neste artigo)
+alguns exemplos em JavaScript e o possível equivalente em ReasonML, observando sempre que: ReasonML/OCaml tem abordagens funcionais, o que 
+fará você perceber uma diferença significante não sintaticamente, mas na forma como os módulos e e estruturas de dados são utilizadas:
 
+### Variáveis
 
+**JavaScript:**
+
+```js
+const name = "Marcos";
+// ou
+const something = 'Marcos';
+// ou
+let something = 'Marcos';
+```
+
+**ReasonML:**
+
+```js
+let name = "Marcos";
+
+```
+Como podemos observar há uma semelhança na definição de variáveis, mas diferente de JavaScript, em Reason só temos _let_, que por sinal
+já é imutável por padrão. E só pra completar, em ReasonML/OCaml somente aspas duplas são permitidas, ao contrário de JavaScript.
+
+### Functions
+
+**JavaScript:**
+```js 
+const sum = (a, b) => {
+  return a + b;
+}
+
+// ou
+
+const sum = (a, b ) => {
+  return a + b;
+};
+```
+
+**ReasonML:**
+
+```js
+let sum = (a, b) => {
+  a + b;
+}
+
+// ou 
+
+let sum = (a, b) => a + b
+```
+
+A síntaxe das funções também é muito semelhante, pelo menos neste exemplo. No código acima a única diferença é que em ReasonML, não há a necessidade
+de usar a palavra reservada _return_ para o retorno do valor. Mas pra deixar claro, a semelhança entre funções em Reason e JavaScript está praticamente
+apenas na síntaxe. Coisas como partial application, currying e labeled arguments fazem toda a diferença na hora de criar e utilizar funções, mas isso é
+tema pra um próximo artigo.
+
+### Objetos e Arrays
+
+**JavaScript:**
+```js
+const person = { 
+  name: "Marcos",
+  age: 18
+};
+```
+
+**ReasonML:**
+
+```ts
+type person = {
+  name: string,
+  age: int
+};
+
+let somePerson = {
+  name: "Marcos",
+  age: 18
+};
+
+```
+
+Falando de objetos, as coisas mudam um pouco e que bom que mudam! Reason é uma linguagem com tipagem forte, logo não poderiamos
+criar um objeto (aka [record](https://reasonml.github.io/docs/en/record) em Reason) sem ter criado seu tipo primeiro, como fizemos na primeira linha.
+
+_Obs.: Não há necessidade de anotar que **somePerson** é do tipo **person**, mas vou falar sobre isso ainda neste artigo :)_
+
+Comparar arrays entre JavaScript e ReasonML é fácil quando se trata de síntaxe, mas falando como manipular essas estruturas de dados as coisas
+mudam bastante. O exemplo a seguir mostra como é semelhante a declaração de arrays nas duas linguagens:
+
+**JavaScript:**
+
+```js
+const numbers = [1, 2];
+```
+
+**ReasonML:**
+
+```js
+let numbers = [| 1, 2 |];
+```
+
+A primeira coisa que você deve ter se perguntado é: porquê usar _[||]_ ao invés de _[]_. E a resposta é simples, Reason diferente
+de JavaScript possui uma estrutura de dados _Array_ e uma _List_, por hora, isso basta como justificativa. Falando da síntaxe
+é bem simples comparar, como eu disse, mas quando se trata de manipular um array ( ou lista ), Reason trabalha de uma forma diferente
+tendo em vista que em Reason não há [protoypes](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype).
+Pra deixar claro o que falei, segue um exemplo:
+
+**JavaScript:**
+
+```js
+const something = numbers.map(number => number + 1);
+```
+
+**ReasonML:**
+
+```js
+let something = Belt.Array.map(numbers, number => number + 1);
+```
 
