@@ -181,9 +181,9 @@ const numbers = [1, 2];
 let numbers = [| 1, 2 |];
 ```
 
-A primeira coisa que você deve ter se perguntado é: porquê usar _[||]_ ao invés de _[]_. E a resposta é simples, Reason diferente
-de JavaScript possui uma estrutura de dados _Array_ e uma _List_, por hora, isso basta como justificativa. Falando da síntaxe
-é bem simples comparar, como eu disse, mas quando se trata de manipular um array ( ou lista ), Reason trabalha de uma forma diferente
+A primeira coisa que você deve ter se perguntado é: porquê usar _[||]_ ao invés de _[]_. E a resposta é simples, diferente de JavaScript,
+de Reason possui estruturas de dados _Array_ e _List_. O uso de _[]_ está reservado para listas. Falando da síntaxe
+é bem simples comparar, mas quando se trata de manipular um array ( ou lista ), Reason trabalha de uma forma diferente
 tendo em vista que em Reason não há [protoypes](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype).
 Pra deixar claro o que falei, segue um exemplo:
 
@@ -199,3 +199,52 @@ const something = numbers.map(number => number + 1);
 let something = Belt.Array.map(numbers, number => number + 1);
 ```
 
+Além desses exemplos acima, existem mais semelhanças na síntaxe entre Reason e JavaScript, mas acredito que pra uma introdução
+esses já bastam, quero focar um pouco mais em Reason como opção a JavaScript, Reason + React e Reason nativo.
+
+# Reason para ambientes JavaScript
+
+Como falei diversas vezes no decorrer deste artigo, Reason pode compilar tanto para JavaScript no front-end, quanto para JavaScript
+no back-end (NodeJS). Por hora entre esses dois ambientes, eu até o momento só experimentei utilizar Reason no front-end. ReasonML 
+possui um suporte excelente a [interoperabilidade](https://reasonml.github.io/docs/en/interop) com JavaScript ( o que pode ser um tanto perigoso ).
+Um exemplo de código Reason interagindo com JavaScript:
+
+```js
+[%bs.raw {| console.log('here is some javascript for you') |}];
+```
+
+Pra explicar um pouco mais esse código, ignore por hora o _%bs.raw_ e foque em **{| |}** ( síntaxe "equivalente" com template strings em JavaScript) que é onde você passa como string
+um código JavaScript a ser executado. De antemão já aviso que, por mais que a linguagem permita esse tipo de abordagem, não é algo seguro como a própria documentação
+diz, já que você abre uma brecha pra toda a insegurança de um código JS. Mas se usado com sabedoria, com certeza irá atender e resolver eventuais necessidades.
+
+### Bindings 
+Semelhante aos "type definitions" em TS, Reason possui o que chamamos de [bindings](https://reasonml.github.io/docs/en/converting-from-js).
+Através dos bindings é possível "portar" uma biblioteca escrita em JavaScript para utilizar em Reason de forma bem simples. Segue um exemplo
+: 
+
+**JavaScript:**
+
+```js
+// my-js-module.js
+
+export const add = a => a + 1
+```
+
+**ReasonML:**
+```js
+// ReasonModule.re
+
+[@bs.module "./my-js-module"] external add: int => int = "add";
+
+let result = add(1)
+```
+
+Tem algumas coisas a se observar nesse exemplo, vamos lá:
+- A primeira coisa a observarmos é que devemos ao informar para o `@bs.module` qual o nome do nosso módulo, o que pode ser
+um módulo instalado via npm ou simplesmente um arquivo .js como é o exemplo acima.
+- A segunda é que devemos anotar qual o tipo da função que estamos fazendo binding, que é feito logo após _:_
+- E por fim utilizando _=_ informamos qual o nome da função exportada por este módulo estamos fazendo o binding, ali no exemplo
+seria a função **add**
+
+Este exemplo representa somente uma parte das possibilidades de interoperabilidade através de bindings com JS, existem diversas
+outras que podem ser encontradas na documentação oficial do [BuckleScript](https://bucklescript.github.io/).
