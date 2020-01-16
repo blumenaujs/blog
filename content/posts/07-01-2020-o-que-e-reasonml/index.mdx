@@ -14,27 +14,27 @@ parte de uma série que irá falar sobre ReasonML e programação funcional_
 ### História
 
 **ReasonML** ou carinhosamente **Reason** não é uma nova linguagem e sim uma nova síntaxe para a linguagem [OCaml](https://ocaml.org/).
-Criada dentro do Facebook, Reason é uma opção extremamente amigável a desenvolvedores JavaScript, pelo fato 
+Criada dentro do Facebook, Reason é uma opção extremamente amigável para desenvolvedores JavaScript, pelo fato 
 de trazer uma síntaxe muito similar a linguagens `C-like`.
 
 ReasonML e ReactJS não só compartilham da mesma incubadora, o Facebook, como também compartilham do mesmo criador
 [Jordan Walke](https://github.com/jordwalke), que claramente tem fortes influências por linguagens da família [ML](http://www.mlworkshop.org/workshops/ml2018), Reason 
-por ser uma extensão da sintaxe de OCaml ( que de forma superficial pode se dizer que é um "filho" de [StandardML](https://pt.wikipedia.org/wiki/Standard_ML)) e React 
+por ser uma extensão da sintaxe de OCaml (que de forma superficial pode se dizer que é um "filho" de [StandardML](https://pt.wikipedia.org/wiki/Standard_ML)) e React 
 que teve seus primeiros protótipos desenvolvidos também em **StandardML**.
 
 ### Porque OCaml/ReasonML?
 
 Por mais que muitos discordem, grande parte da comunidade vai concordar comigo que existe um esforço muito grande em garantir
-que os software sejam entregados com qualidade. Temos diversas formas de aumentar a segurança e código de um software, como testes
-manuais, automatizados ( unitários, integração e até mesmo de tipos). É impossível negar que você já tenha visto um _undefined is not a function_ ou
-_cannot read property 'something' of undefined_. Isso infelizmente é uma realidade do desenvolvedor JavaScript. JavaScript é uma linguagem
+que os softwares desenvolvidos com JavaScript sejam entregados com qualidade e o fato de o mesmo ser dinamicamente e fracamente tipado, é um grande 
+empecilho nisso tudo. Temos diversas formas de aumentar a segurança e código de um software, como testes
+manuais, automatizados (unitários, integração e até mesmo de tipos). É impossível negar que você já tenha visto um _undefined is not a function_ ou
+_cannot read property 'something' of undefined_. Isso infelizmente é uma realidade no mundo JS. JavaScript é uma linguagem
 com tipagem dinâmica e fraca e apesar de se mostrar uma linguagem rápida para desenvolvimento, no fim as coisas podem acabar saindo do controle.
-Claro que utilizando-se de técnicas como testes automatizados ( como testes de checagem de tipos) muito disso pode ser evitado, mas não seria muito melhor
-se a linguagem oferecesse isso pra você? E ainda por cima, não te obrigue a anotar os tipos por todo o código como o famigerado ( brinks <3 ) Java ? Reason 
-como eu disse anteriormente "herda" de OCaml (na verdade herda de SML) um sistema de tipos poderoso e com uma incrível inferência, onde você
-tem os tipos, tem a segurança de uma linguagem fortemente tipada, mas sem precisar sequer ( com algumas execções rs ) escrever os tipos. No decorrer do artigo
+Claro que utilizando-se de técnicas como testes automatizados (como testes de checagem de tipos) muito disso pode ser evitado, mas não seria muito melhor
+se a linguagem oferecesse isso pra você? E ainda por cima, não te obrigasse a anotar os tipos por todo o código como o famigerado (brinks ❤️) Java ? Reason,
+como eu disse anteriormente, "herda" de OCaml um sistema de tipos poderoso e com uma incrível inferência, onde você
+tem os tipos, tem a segurança de uma linguagem fortemente tipada, mas sem precisar sequer (exceto em alguns casos) escrever os tipos. No decorrer do artigo
 os exemplos de código vão mostrar pouco disso e em um futuro artigo, pretendo abordar de forma mais profunda esse assunto.
-
 
 ### ReasonML, OCaml e JavaScript
 
@@ -48,9 +48,9 @@ alguns dos mais conhecidos são a [Bloomberg](https://www.bloomberg.com/), o fam
 para o desenvolvimento de aplicações nativas e [Jane Street](https://www.janestreet.com/technology/) que entre todas, é uma das que mais apoia e incentiva a evolução do ecossistema OCaml.
 
 Pensando que ReasonML não é uma nova linguagem e sim apenas uma nova síntaxe, Reason desfruta dos benefícios desta linguagem robusta e madura.
-Consequentemente ReasonML tem um suporte incrível a programação funcional, já que  OCaml é uma linguagem funcional. Reason pode fazer 
+Consequentemente ReasonML tem um suporte incrível a programação funcional, já que  OCaml é uma linguagem funcional. Reason pode fazer uso
 de diversas features como [pattern matching](https://caml.inria.fr/pub/docs/oreilly-book/html/book-ora016.html), [currying](http://homepages.inf.ed.ac.uk/stg/NOTES/node33.html), [variants](https://v1.realworldocaml.org/v1/en/html/variants.html) e entre outras
-técnicas funcionais que eu e o [Alesson]() iremos abordar nessa série de programação funciona e ReasonML.
+técnicas funcionais que iremos abordar nessa série de programação funcional e ReasonML.
 
 Atualmente há duas formas de se utilizar Reason:
  - Compilando para JavaScript (Front-End e NodeJS) através do projeto [BuckleScript](https://bucklescript.github.io/)
@@ -85,8 +85,8 @@ console.log(factorial(6));
 _Este é um exemplo de código compilado, retirado do [playground](https://reasonml.github.io/en/try.html?rrjsx=true&reason=PQKgBAQghgzgpgEzAewHZgBYBcsAcYBcwwATsvDlAMbIJwB0yJA5sAO4CWA1h8AGLUsTDlAA2AYgBKcKgFcSMDgDc4AfQCsABjAhgAKFFwsYEjLAAzQcLFgAvGAAUqAJR2AfHrBh0AHnubPMAB+MABGQIJvHQsrEhFRJzAAWjDnAG49PQApGHpRZGYHSyohOLEHADZndKA) do site oficial do ReasonML_
 
 Agora falando um pouco de Reason nativo, existem diversos projetos promissores e que vem evoluindo Reason como linguagem de back-end de forma muito rápida.
-O [Onivim](https://github.com/onivim/oni2) que levou a Outrun ( empresa criadora do Onivim) a criar o [Revery](https://github.com/revery-ui/revery), uma alternativa
-de alta perfomance ao Electron, totalmente construindo utilizando ReasonML. Outro caso de uso de ReasonML é o [OneGraph](https://www.onegraph.com/), que utilizou
+O [Onivim](https://github.com/onivim/oni2) que levou a Outrun (empresa criadora do Onivim) a criar o [Revery](https://github.com/revery-ui/revery), uma alternativa
+de alta perfomance ao Electron, totalmente construido utilizando ReasonML. Outro caso de uso de ReasonML é o [OneGraph](https://www.onegraph.com/), que utilizou
 Reason no back-end e no front-end de seus [projetos](https://www.onegraph.com/blog/2018/07/18/OneGraph.html), o que movimentou e evoluiu muito o tooling de Reason na paltaforma nativa.
 Ainda sobre Reason nativo, existe um esforço grande do Facebook em evoluir o ecossistema no lado "native" e um bom exemplo disso é o framework de tests [Rely](https://reason-native.com/docs/rely/) que faz parte de um projeto maior o [ReNative](https://reason-native.com/).
 
@@ -128,9 +128,7 @@ const sum = (a, b) => {
 
 // ou
 
-const sum = (a, b ) => {
-  return a + b;
-};
+const sum = (a, b ) =>  a + b;
 ```
 
 **ReasonML:**
@@ -196,8 +194,8 @@ let numbers = [| 1, 2 |];
 ```
 
 A primeira coisa que você deve ter se perguntado é: porquê usar _[||]_ ao invés de _[]_. E a resposta é simples, diferente de JavaScript,
-de Reason possui estruturas de dados _Array_ e _List_. O uso de _[]_ está reservado para listas. Falando da síntaxe
-é bem simples comparar, mas quando se trata de manipular um array ( ou lista ), Reason trabalha de uma forma diferente
+de Reason possui estruturas de dados _Array_ e _List_. O uso de _[]_ está reservado para listas. Em realação
+é fácil comparar, mas quando se trata de manipular um array (ou lista), Reason trabalha de uma forma diferente
 tendo em vista que em Reason não há [protoypes](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype).
 Pra deixar claro o que falei, segue um exemplo:
 
@@ -220,7 +218,7 @@ esses já bastam, quero focar um pouco mais em Reason como opção a JavaScript,
 
 Como falei diversas vezes no decorrer deste artigo, Reason pode compilar tanto para JavaScript no front-end, quanto para JavaScript
 no back-end (NodeJS). Por hora entre esses dois ambientes, eu até o momento só experimentei utilizar Reason no front-end. ReasonML 
-possui um suporte excelente a [interoperabilidade](https://reasonml.github.io/docs/en/interop) com JavaScript ( o que pode ser um tanto perigoso ).
+possui uma excelente [interoperabilidade](https://reasonml.github.io/docs/en/interop) com JavaScript.
 Um exemplo de código Reason interagindo com JavaScript:
 
 ```js
@@ -262,3 +260,26 @@ seria a função **add**
 
 Este exemplo representa somente uma parte das possibilidades de interoperabilidade através de bindings com JS, existem diversas
 outras que podem ser encontradas na documentação oficial do [BuckleScript](https://bucklescript.github.io/).
+
+O fato de existir a possibilidade de se portar uma biblioteca JavaScript para ReasonML, obviamente movimentou muitas pessoas
+da comunidade a escreverem bindings de diversas bibliotecas. O ecossistema Reason ainda é muito novo, mas a comunidade é muito forte
+e ativa. Assim como em TypeScript é possível importar type definitions (bindings em Reason) de outras bibliotecas, feitas por
+terceiros. de forma bem fácil. A comunidade adotou um sufixo **bs-** (e.g _bs-moment_) antes dos nomes dos pacotes e com poucas buscas no github, npm e google
+é possivel achar bindings de diversas bilbiotecas já consolidadas em JS para Reason. Antes que me perguntem, nem todas os bindings de Reason
+começam com _bs_, alguns pacotes como bindings do [React](https://github.com/reasonml/reason-react) e do [React Native](https://github.com/reason-react-native/reason-react-native), não utilizam essa convenção. Para exemplificar, segue um exemplo utilizando [bs-moment](https://github.com/reasonml-community/bs-moment)
+
+
+```js
+  let result = Moment.format(createdAt, "dd/MM/yy")
+```
+
+
+Outros pacotes como [bs-webapi](https://github.com/reasonml-community/bs-webapi-incubator) (DOM) e [bs-fetch](https://github.com/reasonml-community/bs-fetch) (window.fetch)
+tem recebido grande atenção da comunidade, por serem bindings de apis nativas do browser e para que haja uma melhor experiência no desenvolvimento com ReasonML é necessário evoluir o ecossistema como um todo.
+
+### NodeJS
+
+Realmente não há muito o que se falar, pelo menos em minha opinião. Não tenho visto uma grande aproximação da comunidade de ReasonML
+e a comunidade de Node. Obviamente que com os bindings existentes em reason, é possível utilizar ReasonML com NodeJS. Existem alguns
+bindings de bibliotecas já populares em NodeJS como [express](https://github.com/reasonml-community/bs-express) e [socket.io](https://github.com/reasonml-community/bs-socket.io)
+e até mesmo bindings pra api do próprio NodeJS.
