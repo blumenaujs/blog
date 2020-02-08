@@ -46,9 +46,9 @@ Outras empresas também optaram por utilizar OCaml no desenvolvimento de diverso
 alguns dos mais conhecidos são a [Bloomberg](https://www.bloomberg.com/), o famoso [Docker](https://www.docker.com/blog/docker-for-mac-windows-beta/) e a [Jane Street](https://www.janestreet.com/technology/) que entre todas, é uma das que mais apoia e incentiva a evolução do ecossistema OCaml.
 
 Pensando que ReasonML não é uma nova linguagem e sim apenas uma nova síntaxe, Reason desfruta dos benefícios desta linguagem robusta e madura.
-Consequentemente ReasonML hearde de OCaml um incrível suporte a programação funcional. Reason pode fazer uso
+Consequentemente ReasonML herda de OCaml um incrível suporte a programação funcional. Reason pode fazer uso
 de diversas features como [pattern matching](https://caml.inria.fr/pub/docs/oreilly-book/html/book-ora016.html), [currying](http://homepages.inf.ed.ac.uk/stg/NOTES/node33.html), [variants](https://v1.realworldocaml.org/v1/en/html/variants.html) e entre outras
-técnicas funcionais que iremos abordar nessa série de programação funcional e ReasonML.
+técnicas funcionais que iremos abordar nesta série de programação funcional e ReasonML.
 
 Atualmente há duas formas de se utilizar Reason:
  - Compilando para JavaScript (Front-End e NodeJS) através do projeto [BuckleScript](https://bucklescript.github.io/)
@@ -193,7 +193,7 @@ let numbers = [| 1, 2 |];
 ```
 
 A primeira coisa que você deve ter se perguntado é: porquê usar _[||]_ ao invés de _[]_. E a resposta é simples, diferente de JavaScript,
-de Reason possui estruturas de dados _Array_ e _List_. O uso de _[]_ está reservado para listas. Em realação
+de Reason possui estruturas de dados _Array_ e _List_. O uso de _[]_ está reservado para listas. Em relação
 é fácil comparar, mas quando se trata de manipular um array (ou lista), Reason trabalha de uma forma diferente
 tendo em vista que em Reason não há [protoypes](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype).
 Pra deixar claro o que falei, segue um exemplo:
