@@ -1,0 +1,93 @@
+---
+title: Testando rotas com react testing library
+author: Janderson Constantino
+date: 2020-02-09
+hero: ./images/hero.png
+excerpt: Realizar o teste de rotas renderizadas através do @testing-library/react
+---
+
+### O que vamos precisar
+Primeiramente eu aconselho a criar um projeto novo para entender o conceito antes de aplicar em um projeto real.
+Podemos utilizar o [create-react-app](https://github.com/facebook/create-react-app) para iniciar o projeto.
+Para os testes precisaremos de duas libs. Então vamos adiciona-las.
+
+```npm
+yarn add @testing-library/react react-router-dom
+```
+
+### Arquivo routes.js
+Para facilitar o entendimento coloquei as duas "páginas" dentro do arquivo de routes.js, mas em um ambiente real, importamos as pages para o arquivo de rotas.
+Teremos apenas um path como **/** que aponta para a `Home` e qualquer rota diferente desta estaremos apontando para a página de 404.
+
+```js
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+
+const Home = () => <h1>Home</h1>;
+const NotFound = () => <h1>Page not found</h1>;
+
+const Routes = () => (
+  <Switch>
+    <Route path="/" exact>
+      <Home />
+    </Route>
+    <Route path="*">
+      <NotFound />
+    </Route>
+  </Switch>
+);
+
+export default Routes;
+```
+
+## E agora?
+Utilizaremos a função **createMemoryHistory** para gerar uma history capaz de executar as funções que utilizamos como: push, goBack, etc.
+Devido a existir apenas uma rota e o redirect para not found, precisamos apenas de 2 testes no momento:
+- Quando passarmos uma rota igual a '/' a página Home deverá ser renderizada;
+- Quando passarmos uma rota diferente de '/' a página de 404 deverá ser renderizada.
+
+Certo? Então vamos lá.
+
+## routes.spec.js
+Vejamos abaixo, a history que criamos com a função **createMemoryHistory** deverá ser passada para o component Router do react-router-dom para que possa interpretar nossas mudanças da mesma forma que o navegador.
+
+```js
+import React from 'react';
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
+import { render } from '@testing-library/react'
+
+import Routes from './routes';
+
+describe('Routes', () => {
+  it('home page should be render when pathname is `/`', async () => {
+    const history = createMemoryHistory();
+    history.push('/');
+
+    const { container } = render(
+      <Router history={history}>
+        <Routes />
+      </Router>
+    );
+
+    expect(container.innerHTML).toMatch(/Home/);
+  });
+
+  it('404 page should be render when pathname do not match with none routes', async () => {
+    const history = createMemoryHistory();
+    history.push('/bad-url');
+
+    const { container } = render(
+      <Router history={history}>
+        <Routes />
+      </Router>
+    );
+
+    expect(container.innerHTML).toMatch(/Page not found/);
+  });
+});
+```
+
+Nossos dois casos de teste irão passar e podemos ver que o react testing library junto ao react-router-dom possuem uma abordagem simples para trabalhar o direcionamento de rotas, sem utilizarmos mocks para executar esses testes e assim garantindo que os testes fiquem cada vez mais reais.
+
+_Quer enviar um artigo para o blog do BlumenauJS ? Dá uma olhadinha no [repositório](https://github.com/blumenaujs/blog) do blog, é só seguir os passos da documentaçao e abrir um PR._

@@ -23,3 +23,14 @@
       url: https://twitter.com/vmaarcosp
     - name: instagram
       url: https://instagram.com/vmarcosp
+- name: Janderson Constantino
+  bio: Front-end Engineer • Membro do BlumenauJS
+  avatar: ./avatars/jandersonconstantino.jpeg
+  featured: false
+  social:
+    - name: github
+      url: https://github.com/JandersonConstantino
+    - name: twitter
+      url: https://twitter.com/JandConstantino
+    - name: instagram
+      url: https://instagram.com/jandersonconstantino
