@@ -1,0 +1,379 @@
+---
+title: Testando queries graphQL
+author: Janderson Constantino
+date: 2020-05-12
+hero: ./images/hero.png
+excerpt: Como realizar o teste de queries graphQL
+---
+
+### Introdução
+Sabemos que o graphQL mudou a forma que trabalhamos com requisições de data no front-end, mas além de sabermos utilizar a biblioteca
+para realizar as requisições, também precisamos garantir a qualidade do código escrito, qual a melhor forma de realizar isso? **Fazendo testes!**
+
+### Pacotes utilizados nesse exemplo
+Primeiramente eu aconselho a criar um projeto novo para entender o conceito antes de aplicar em um projeto real.
+Podemos utilizar o [create-react-app](https://github.com/facebook/create-react-app) para iniciar o projeto.
+Para esse exemplo precisaremos de algumas libs. Então vamos adiciona-las.
+
+```npm
+  yarn add @testing-library/react apollo-boost @apollo/react-hooks graphql @apollo/react-testing
+```
+
+### Componente Users.js
+Teremos um componente React bem simples, que possui um input de filtro e a tabela de usuários onde serão
+carregados os dados do request que faremos ao graphQL. Para esse exemplo a consulta retorna apenas dois campos: id e name.<br/>
+Verificar que exporto a query pois utilizaremos a mesma no arquivo de teste.
+
+```jsx
+import React, { useState, useCallback } from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+
+export const query = gql`
+ query Users($description: String) {
+   users {
+    items {
+      id
+      name
+    }
+   }
+ }
+`
+
+function Users() {
+  const [description, setDescription] = useState('');
+  const { data, loading } = useQuery(query, {
+    variables: { description }
+  })
+  const users = useCallback(data?.users?.items || [], [data]);
+
+  return (
+    <>
+      <input
+        type="text"
+        data-testid="input-filter-id"
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+      />
+      {loading && (
+        <h3>is loading...</h3>
+      )}
+
+      {users.length > 0 && (
+        <table border="1" data-testid="table-user">
+          <thead>
+            <tr>
+              <td>Id</td>
+              <td>Name</td>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user.id} data-testid={`table-user-tr-${user.id}`}>
+                <td>{user.id}</td>
+                <td>{user.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </>
+  )
+}
+
+export default Users
+```
+
+## Vamos começar com os testes
+
+### Mocked Provider
+
+Quando fazemos teste unitário, não há integração com o servidor,
+logo, não é possível utilizar o apollo provider
+(que é utilizado para determinar o servidor que o graphQL vai se conectar e outras configurações, como cache, por ex).
+A principal propriedade desse provider que utilizaremos é a mocks, onde passamos um array de objetos de mock que possuem duas propriedades: request e result.
+
+- Request: definimos a query e os parâmetros que serão recebimos no mock;
+- Result: O resultado que será retornado para o request, podendo ser um dado válido ou um erro, mas nesse momento nos concentraremos apenas na situação com dados válidos.
+
+Vamos a um exemplo simples de um mock em graphQL
+
+```js
+import gql from 'graphql-tag'
+
+// Query que irei mockar um resultado
+const queryUser = gql`
+  query UsersFetcher($description: String!) {
+    users(description: $description) {
+      items {
+        id
+        name
+      }
+    }
+  }
+`
+
+const mocks = [
+  {
+    request: {
+      query: queryUser, // query
+      variables: { description: '' } // variáveis (parâmetros da query)
+    },
+    result: { // Pode ser um object, uma função ou um erro
+      data: {
+        users: {
+          items: [
+            { id: 1, name: 'Marcelino' }
+          ]
+        }
+      }
+    }
+  }
+]
+```
+
+Esse mock será chamado, quando a query `queryUser` for chamada passando o parâmetro description como uma string vazia,
+caso contrário, esse mock não será executado.
+
+### Teste 01 - Se o loading está ativo
+Vamos ao nosso primeiro caso de teste do arquivo Users.js.<br/>
+Sempre que o componente é renderizado, o hook **useQuery** realiza o request para o graphQL, porém sabemos que requisições
+são assíncronas. o hook esporta uma propriedade chamada **loading** que nos informa quando a requisição está em processamento.
+Então vamos fazer um teste para que quando o componente seja renderizado e o request ainda não tenha sido finalizado seja exibido o texto
+**"is loading..."** conforme o arquivo `Users.js`.
+
+```jsx
+import React from 'react'
+import { render } from '@testing-library/react'
+import { MockedProvider } from '@apollo/react-testing'
+
+import Users, { query } from './Users'
+
+describe('Tests Users', () => {
+  it('should render loading text when fetching', () => {
+    const { queryAllByText } = renderComponents();
+
+    const countLoading = queryAllByText('is loading...')
+    expect(countLoading).toHaveLength(1)
+  })
+})
+
+const defaultMocks = [
+  {
+    request: {
+      query,
+      variables: { description: '' }
+    },
+    result: {
+      data: {
+        users: {
+          items: [
+            { id: 1, name: 'Michael Douglas' }
+          ]
+        }
+      }
+    }
+  }
+]
+
+const renderComponents = (mocks = defaultMocks) => {
+  return render(
+    <MockedProvider addTypename={false} mocks={mocks}>
+      <Users />
+    </MockedProvider>
+  )
+}
+```
+
+Verifique que passamos um mock válido,
+porém não esperamos a requisição ser concluída pois esse caso de teste tinha a finalidade de validar
+se o loading está aparecendo, e conseguimos concluir com sucesso.
+
+
+### Teste 02 - Verificar se o item está sendo renderizado ao concluir o request
+Agora nós vamos testar se, quando passamos a variable description como string vazia a data retornada é renderizada.
+para isso utilizaremos um método assíncrono do React Testing Library chamado waitFor, e dentro dele passaremos o que esperamos que aconteça.
+
+```jsx
+import React from 'react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
+import { MockedProvider } from '@apollo/react-testing'
+
+import Users, { query } from './Users'
+
+describe('Tests Users', () => {
+  it('should render results of query', async () => {
+    const { getByTestId } = renderComponents();
+
+    await waitFor(() => {
+      const tableItem = getByTestId('table-user-tr-1')
+      const children = tableItem.querySelectorAll('td')
+
+      expect(children[0].innerHTML).toEqual('1')
+      expect(children[1].innerHTML).toEqual('Michael Douglas')
+    })
+  })
+})
+
+const defaultMocks = [
+  {
+    request: {
+      query,
+      variables: { description: '' }
+    },
+    result: {
+      data: {
+        users: {
+          items: [
+            { id: 1, name: 'Michael Douglas' }
+          ]
+        }
+      }
+    }
+  }
+]
+
+const renderComponents = (mocks = defaultMocks) => {
+  return render(
+    <MockedProvider addTypename={false} mocks={mocks}>
+      <Users />
+    </MockedProvider>
+  )
+}
+```
+
+Vejam que estou pegando o componente tr pelo data-testid, que é uma propriedade utilizada pela lib de teste.
+Após pegarmos o tr, eu leio o que está dentro de cada td e valido se é o que eu passei no result do mock.
+
+### Teste 03 - Quando muda o filtro, deve filtrar de acordo com o texto
+Nesse caso de teste, utilizaremos o input filter que criamos e associamos a variável description do graphQL.
+Iremos criar um mock que na propriedade request.variables.description possua o texto 'Julia' e a data que será retornada por esse mock será diferente do anterior. Vamos ao caso de teste.
+
+```jsx
+import React from 'react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
+import { MockedProvider } from '@apollo/react-testing'
+
+import Users, { query } from './Users'
+
+describe('Tests Users', () => {
+  it('should filter results using input filter', async () => {
+    const event = { target: { value: 'Julia' } }
+
+    const { getByTestId } = renderComponents();
+
+    const input = getByTestId('input-filter-id')
+    fireEvent.change(input, event) // primeiro executamos o change do input para o valor 'Julia'
+
+    await waitFor(() => { // Esperamos o assert assíncrono
+      let tableItem
+      let children
+
+      // Aqui lemos o nosso primeiro tr e os valores conforma passamos no
+      // mock
+      tableItem = getByTestId('table-user-tr-2')
+      children = tableItem.querySelectorAll('td')
+
+      expect(children[0].innerHTML).toEqual('2')
+      expect(children[1].innerHTML).toEqual('Julia Roberts')
+
+      // Depois lemos o segundo registro para ter certeza que está pegando os valores corretamente
+      // de cada item do array
+      tableItem = getByTestId('table-user-tr-3')
+      children = tableItem.querySelectorAll('td')
+
+      expect(children[0].innerHTML).toEqual('3')
+      expect(children[1].innerHTML).toEqual('Julia Stiles')
+    })
+  })
+})
+
+const defaultMocks = [
+  {
+    request: {
+      query,
+      variables: { description: 'Julia' }
+    },
+    result: {
+      data: {
+        users: {
+          items: [
+            { id: 2, name: 'Julia Roberts' },
+            { id: 3, name: 'Julia Stiles' }
+          ]
+        }
+      }
+    }
+  }
+]
+
+const renderComponents = (mocks = defaultMocks) => {
+  return render(
+    <MockedProvider addTypename={false} mocks={mocks}>
+      <Users />
+    </MockedProvider>
+  )
+}
+```
+
+Agora já testamos quase todos os casos possívels do componente User, faltando apenas uma situação em que a query não retorne resultados.
+Se olharmos o arquivo `Users.js` veremos que, quando o array está vazio, o componente `table` não é renderizado,
+esse será nosso próximo teste, então vamos lá.
+
+### Teste 04 - Não exibir a table quando o array de items estiver vazio
+Nosso mock terá no seu retorno um array vazio, para simular quando filtramos por algo e a description não é encontrada no back-end.
+Nesse caso, filtraremos pelo data-testid da table e será necessário que ele não exista no componente. Vamos ao teste
+
+```jsx
+import React from 'react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
+import { MockedProvider } from '@apollo/react-testing'
+
+import Users, { query } from './Users'
+
+describe('Tests Users', () => {
+  it('should NOT should table when request not return items', async () => {
+    const event = { target: { value: 'zzz' } }
+
+    const { getByTestId, queryAllByTestId } = renderComponents();
+
+    const input = getByTestId('input-filter-id')
+    fireEvent.change(input, event) // texto do input alterado para `zzz`
+
+    await waitFor(() => { // esperamos pela conclusão do request
+    // Vemos que a quantidade de componentes com o data-testid
+    // da table deve ser 0 (zero)
+      expect(queryAllByTestId('table-user')).toHaveLength(0)
+    })
+  })
+})
+
+const defaultMocks = [
+  {
+    request: {
+      query,
+      variables: { description: 'zzz' }
+    },
+    result: {
+      data: { users: { items: [] } }
+    }
+  }
+]
+
+const renderComponents = (mocks = defaultMocks) => {
+  return render(
+    <MockedProvider addTypename={false} mocks={mocks}>
+      <Users />
+    </MockedProvider>
+  )
+}
+```
+
+Dessa forma concluímos os casos de teste de graphQL,
+faltando apenas simular quando ocorre erro na query, mas isso ficará para um próximo post.
+
+Deseja ver o código que foi feito? de uma olhada no repo no [github](http://github.com/JandersonConstantino/how-to-test-graphql-queries).
+
+Qualquer dúvida, meu contato está no blog e eu adoraria auxiliar, um abraço e até a próxima.
+
+_Quer enviar um artigo para o blog do BlumenauJS ? Dá uma olhadinha no [repositório](https://github.com/blumenaujs/blog) do blog, é só seguir os passos da documentaçao e abrir um PR._
