@@ -1,13 +1,13 @@
 ---
-title: Testando queries graphQL
+title: Testando queries GraphQL
 author: Janderson Constantino
 date: 2020-05-12
 hero: ./images/hero.png
-excerpt: Como realizar o teste de queries graphQL
+excerpt: Como realizar o teste de queries GraphQL
 ---
 
 ### Introdução
-Sabemos que o graphQL mudou a forma que trabalhamos com requisições no front-end, mas além de sabermos utilizar a biblioteca
+Sabemos que o GraphQL mudou a forma que trabalhamos com requisições no front-end, mas além de sabermos utilizar a biblioteca
 para realizar as requisições, também precisamos garantir a qualidade do código escrito, qual a melhor forma de realizar isso? **Fazendo testes!**
 
 ### Pacotes utilizados nesse exemplo
@@ -16,22 +16,22 @@ Podemos utilizar o [create-react-app](https://github.com/facebook/create-react-a
 Para esse exemplo precisaremos de algumas libs. Então vamos adiciona-las.
 
 ```npm
-  yarn add @testing-library/react apollo-boost @apollo/react-hooks graphql @apollo/react-testing
+  yarn add @testing-library/react apollo-boost @apollo/react-hooks Graphql @apollo/react-testing
 ```
 
 ### Componente Users.js
 Teremos um componente React bem simples, que possui um input de filtro e a tabela de usuários onde serão
-carregados os dados do request que faremos ao graphQL. Para esse exemplo a consulta retorna apenas dois campos: id e name.<br/>
+carregados os dados do request que faremos ao GraphQL. Para esse exemplo a consulta retorna apenas dois campos: id e name.<br/>
 Verificar que exporto a query pois utilizaremos a mesma no arquivo de teste.
 
 ```jsx
 import React, { useState, useCallback } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import gql from 'Graphql-tag'
 
 export const query = gql`
  query Users($description: String) {
-   users {
+   users($description: String) {
     items {
       id
       name
@@ -90,16 +90,16 @@ export default Users
 
 Quando fazemos teste unitário, não há integração com o servidor,
 logo, não é possível utilizar o apollo provider
-(que é utilizado para determinar o servidor que o graphQL vai se conectar e outras configurações, como cache, por ex).
+(que é utilizado para determinar o servidor que o GraphQL vai se conectar e outras configurações, como cache, por ex).
 A principal propriedade desse provider que utilizaremos é a mocks, onde passamos um array de objetos de mock que possuem duas propriedades: request e result.
 
 - Request: definimos a query e os parâmetros que serão recebimos no mock;
 - Result: O resultado que será retornado para o request, podendo ser um dado válido ou um erro, mas nesse momento nos concentraremos apenas na situação com dados válidos.
 
-Vamos a um exemplo simples de um mock em graphQL
+Vamos a um exemplo simples de um mock em GraphQL
 
 ```js
-import gql from 'graphql-tag'
+import gql from 'Graphql-tag'
 
 // Query que irei mockar um resultado
 const queryUser = gql`
@@ -137,10 +137,14 @@ caso contrário, esse mock não será executado.
 
 ### Teste 01 - Se o loading está ativo
 Vamos ao nosso primeiro caso de teste do arquivo Users.js.<br/>
-Sempre que o componente é renderizado, o hook **useQuery** realiza o request para o graphQL, porém sabemos que requisições
+Sempre que o componente é renderizado, o hook **useQuery** realiza o request para o GraphQL, porém sabemos que requisições
 são assíncronas. o hook esporta uma propriedade chamada **loading** que nos informa quando a requisição está em processamento.
 Então vamos fazer um teste para que quando o componente seja renderizado e o request ainda não tenha sido finalizado seja exibido o texto
 **"is loading..."** conforme o arquivo `Users.js`.
+
+Verifique que passamos um mock válido,
+porém não esperamos a requisição ser concluída pois esse caso de teste tinha a finalidade de validar
+se o loading está aparecendo, e conseguimos concluir com sucesso.
 
 ```jsx
 import React from 'react'
@@ -193,6 +197,8 @@ se o loading está aparecendo, e conseguimos concluir com sucesso.
 ### Teste 02 - Verificar se o item está sendo renderizado ao concluir o request
 Agora nós vamos testar se, quando passamos a variable description como string vazia a data retornada é renderizada.
 para isso utilizaremos um método assíncrono do React Testing Library chamado waitFor, e dentro dele passaremos o que esperamos que aconteça.
+Vejam que estou pegando o componente tr pelo data-testid, que é uma propriedade utilizada pela lib de teste.
+Após pegarmos o tr, eu leio o que está dentro de cada td e valido se é o que eu passei no result do mock.
 
 ```jsx
 import React from 'react'
@@ -246,7 +252,7 @@ Vejam que estou pegando o componente tr pelo data-testid, que é uma propriedade
 Após pegarmos o tr, eu leio o que está dentro de cada td e valido se é o que eu passei no result do mock.
 
 ### Teste 03 - Quando muda o filtro, deve filtrar de acordo com o texto
-Nesse caso de teste, utilizaremos o input filter que criamos e associamos a variável description do graphQL.
+Nesse caso de teste, utilizaremos o input filter que criamos e associamos a variável description do GraphQL.
 Iremos criar um mock que na propriedade request.variables.description possua o texto 'Julia' e a data que será retornada por esse mock será diferente do anterior. Vamos ao caso de teste.
 
 ```jsx
@@ -369,11 +375,6 @@ const renderComponents = (mocks = defaultMocks) => {
 }
 ```
 
-Dessa forma concluímos os casos de teste de graphQL,
-faltando apenas simular quando ocorre erro na query, mas isso ficará para um próximo post.
-
-Deseja ver o código que foi feito? de uma olhada no repo no [github](http://github.com/JandersonConstantino/how-to-test-graphql-queries).
-
-Qualquer dúvida, meu contato está no blog e eu adoraria auxiliar, um abraço e até a próxima.
+a
 
 _Quer enviar um artigo para o blog do BlumenauJS ? Dá uma olhadinha no [repositório](https://github.com/blumenaujs/blog) do blog, é só seguir os passos da documentaçao e abrir um PR._
