@@ -1,0 +1,298 @@
+---
+title: O que é ReasonML ? Parte 2
+author: Marcos Oliveira
+date: 2020-02-08
+excerpt: Uma não tão breve introdução a ReasonML e o seu ecossistema
+---
+
+## Introdução
+
+De início quero me desculpar as pessoas que me pediram muito essa segunda parte da série "O que é ReasonML?".
+Ocorreram muitas mudanças desde o primeiro post e eu acabei deixando de lado essa série de artigos.
+Nesta segunda parte, vou dar continuação ao artigo anterior, com objetivo de dar uma visão geral sobre o que é ReasonML, 
+onde ele pode ser usado e o porque você deveria optar por ele ao invés de TypeScript ou Flow. 
+
+Se você não leu a primeira parte deste artigo, pare, leia, e volte aqui para continuar. A primeira parte contém informações muito 
+importantes sobre ReasonML e vai ser crucial para entender os tópicos que irei abordar aqui neste artigo.
+Esta é a segunda e última parte da série, logo quero começar outra que será "Como dar os primeiros passos 
+com ReasonML e React". Se tudo der certo também devo soltar alguns vídeos no canal do [YT](https://www.youtube.com/channel/UCej3xR0REyuvYYAFz0SbswA) 
+da [Lukin](https://lukin.co), onde vou passar o mesmo conteúdo sobre como iniciar em Reason com React, só que em formato de vídeo.
+
+Bom era isso, sem mais delongas, vamos falar de Reason!
+
+## ReasonML 🖤 React
+
+Como disse no primeiro artigo, Reason e React foram criados pela mesma pessoa, o Jordan Walke, e dentro da mesma incubadora, o Facebook. 
+Este é um detalhe crucial para entender alguns aspectos presentes em ReasonML que irei abordar neste artigo.
+
+Reason foi projetado desde o início para ser utilizado com React. Isso fica evidente quando vemos a 
+integração entre essas duas tecnologias. Reason diferente de langs como TypeScript ou Flow, já possui em sua sintaxe suporte a 
+JSX, ou seja, o compilador consegue interpretar quando você escreve utilizando aquela sintaxe bem familiar para devs JS/React: 
+
+```jsx
+<MyComponent someProp={1} />
+```
+
+Esta é uma das características mais marcantes de Reason! O fato de a sintaxe permitir por padrão JSX, tornou 
+a compatibilidade com React muito fácil. Só para dar um gostinho de como ficaria um componente React, observe o código abaixo:
+
+```reason
+[@react.component]
+let make = (~children) => <div>{children}</div>;
+```
+
+Não se atenha a partes da sintaxe que ainda não expliquei, mas preste atenção apenas na parte similar a JavaScript. 
+Este exemplo acima já é um componente React escrito utilizando ReasonML.
+
+_Na série sobre como dar os primeiros passos com ReasonML e React, vou explicar melhor como funciona exatamente 
+cada parte deste código e você irá entender ainda mais, como utilizar Reason com React_
+
+_SEÇÃO AINDA NÃO FINALIZADA_
+<hr/>
+
+## Considerações sobre Reason nativo
+
+Não é o objetivo deste artigo falar sobre Reason na plataforma nativa, através de OCaml. Porém é impossível não 
+mencionar o trabalho excepcional e com muito potencial que a comunidade ReasonML vem fazendo na plataforma nativa.
+Como já havia mencionado no artigo anterior, o Revery funciona muito bem para desenvolver aplicações desktop 
+e graças ao suporte embutido a JSX na síntaxe do Reason, é possível utilizar "React" para desenvolver aplicações desktop utilizando Reason com o Revery.
+
+_"React" entre aspas mesmo, pois não se trata do mesmo React conhecemos para web e sim uma implementação 
+escrita em ReasonML que segue a mesma API que o React, mas que roda de forma nativa no lado do servidor._
+
+Vale mencionar também o trabalho incrível do [Eduardo](https://twitter.com/TheEduardoRFS) em tentar levar aplicações feitas com Revery para IOS e Android. 
+Vale a pena acompanhar as lives dele na [twitch](https://www.twitch.tv/eduardorfs).
+
+Pretendo fazer alguns posts sobre Reason nativo no futuro, mas por hora quero focar em Reason com React e Reason para ambientes JavaScript.
+
+## Por que ReasonML?
+
+### O problema
+
+Para responder essa pergunta, vou precisar cutucar em algumas "feridas" dos desenvolvedores JavaScript. Vejo uma certa resistência de 
+parte da comunidade em aceitar que JavaScript tem "características" (vamos tratar dessa forma)  que podem trazer complicações quando falamos de 
+colocar softwares em produção e trabalhar em projetos com bases de código relativamente grandes e com equipes maiores.
+
+Neste  [artigo]([https://rollbar.com/blog/top-10-javascript-errors/) a Rollbar 
+(uma empresa que trabalha com soluções para tracking de erros em aplicações) mostra, através de dados coletados da sua platatforma, os *10 erros mais 
+comuns em aplicações JavaScript* e o que se pode observar é que dos 10 erros listados, **7** deles são o que conhecemos por *TypeErrors.*
+
+O fato de JavaScript ser uma linguagem dinamicamente e fracamente tipada, 
+pode e provavelmente vai te causar problemas em produção em algum momento. Qualquer desenvolvedor JavaScript com uma certa experiência, certamente já passou pela seguinte situação:
+
+*Recebeu um ticket de erro ou o reportaram que ocorreu um erro em produção e para entender o problema e o que estava ocorrendo, abriu o console 
+e  se deparou com a seguinte mensagem:*
+
+![Erro no console](./images/console-error.png)
+
+Isso apesar de ser comum, não deveria ser considerado normal pelos desenvolvedores JavaScript, que com o tempo acostumou-se com esse tipo de 
+erro acontecendo no ambiente de produção ou até mesmo durante o desenvolvimento. Desenvolvedores JavaScript estão sempre lidando com esse tipo 
+de situação e o que começou como uma simples *característica* da linguagem, em produção se torna uma dor de cabeça.
+
+![This is fine](./images/this-is-fine.png)
+
+### Como evitar isso?
+
+Bom, existem algumas formas de você evitar que esses erros aconteçam. Uma delas e a mais comum é  *programar de forma defensiva,* o que é péssimo, 
+pois no fim você acaba se preocupando com coisas que não necessariamente você deveria se preocupar como: validar se você está somando valores do 
+tipo *number* com *strings* ou tentar executar um *.map* em algo que não é um *array* e entre outras situações comuns para devs JavaScript.
+Por outro lado existe um esforço em criar ferramentas que cuidem desses detalhes para você, como linters e supersets, como o TypeScript. 
+Certamente utilizar essas ferramentas ou supersets, vão te ajudar a evitar a passar por esses erros de runtime. 
+
+Alguns de vocês devem estar pensando agora "*ah eu uso TypeScript, então eu já delego essas coisas para linguagem"*  e é verdade! TypeScript é uma 
+opção para lidar com esses problemas. Porém mesmo com TypeScript você pode acabar passando por alguns problemas semelhantes, já que TypeScript 
+"coloca tipos em JS" e o mesmo foi feito para ter uma adoção gradual, ou seja, você ainda pode acabar lidando com essas situações caso tenha 
+que utilizar o famoso *any* nas suas aplicações. 
+
+Diferente do TypeScript ou até mesmo do Flow, Reason não tenta colocar tipos no JavaScript e sim _"colocar JavaScript"_ nos tipos, como disse 
+o [@fakenickels](https://twitter.com/fakenickels) na sua [talk](https://www.youtube.com/watch?v=q1gPfQHpVjo) de ReasonML na ReactConf. E o quê isso significa? Que Reason não vai adicionar um sistema de tipos ao JavaScript 
+e sim, trazer a síntaxe do JavaScript para uma linguagem robusta, madura e com um sistema de tipos incrível que é *OCaml.*
+Como eu havia dito na primeira parte do artigo, Reason é somente uma nova síntaxe, mais familiar a devs JavaScript, para a linguagem OCaml. 
+
+Mesmo que você não passe por problemas e erros de runtime utilizando TypeScript, certamente já se deparou com situações onde seu código se tornou muito 
+verboso e rolou anotação de tipos por quase toda a parte do código. E se eu te dissesse que você pode desfrutar das vantagens de 
+se utilizar tipos e ainda assim não ter que anota-los (quase nunca) no seu código? Você não os vê, mas eles estão lá. Nos próximos trechos eu 
+vou tentar trazer apresentar um pouco de como funciona o sistema de tipos do ReasonML, na prática.
+
+### Tipos em ReasonML
+
+Como eu disse anteriormente, o sistema de tipos de OCaml é incrível e muito poderoso, permite você modelar seu software de uma maneira muito 
+clara e sem tirar a elegância da síntaxe. Como ReasonML é só uma síntaxe para OCaml, ele herda também o sistema de tipos. 
+
+Não vou falar profundamente sobre como o sistema de tipos de OCaml/ReasonML funciona, daria para fazer uma série inteira falando somente sobre isso. 
+Meu objetivo aqui é mostrar a parte prática e o contraste disso com JavaScript e TypeScript. 
+
+O primeiro ponto a se destacar no sistema de tipos de ReasonML é que paraticamente tudo é inferido, sim ***quase*** tudo. Isso significa que 
+você apenas precisa __declarar__ seus tipos, mas não vai precisar __anota-los__ na hora de utilizar. 
+
+Os exemplos de declaração de variáveis que dei  na primeira parte do artigo, com valores do tipo *string* e *int* não são um bom exemplo 
+de contraste com TypeScript, já que ele também possui uma inferência, mas, que é infinitamente inferior a que ReasonML possui.
+
+Bom vamos a alguns exemplos:
+
+***Functions***
+
+_TypeScript_
+```typescript
+const sum = (a: number, b: number) => a + b
+```
+_Reason_
+```reason
+let sum = (a,b) => a + b;
+```
+
+ Observe que eu não anotei nenhum tipo no segundo exemplo de Reason. No entanto, o compilador sabe os tipos mesmo. 
+ Se tentarmos utilizar esta função da seguinte forma:
+
+```reason
+sum("10", 10);
+```
+
+O compilador vai mostrar o seguinte erro:
+
+```javascript
+  // We've found a bug for you!
+ 
+  1 │ let sum = (a,b) => a + b;
+  2 │ 
+  3 │ sum(->"10"<-, 10);
+  
+  This has type:
+    string
+  But somewhere wanted:
+    int
+```
+
+O compilador identificou que minha função recebe somente parâmetros do tipo int, e em __compile time__ e não em __runtime__ me indicou que estou utilizando a função da maneira errada. 
+Mas como ele sabe que esses parâmetros são do tipo __int__? O sistema de tipos consegue analisar a minha expressão __a + b__
+e deduzir que os parâmetros só podem ser do tipo int por conta do operador __+__, que em ReasonML só pode ser utilizado com integers, e dessa forma ele não só consegue nos garantir que estamos utilizando a função da maneira correta, como também não exige que você anote os tipos em todas as funções, como ocorre em TypeScript.
+
+_Observe que há diferença entre integers e floats, se estivessemos trabalhando com valores do tipo float o operador seria __+.__ , 
+com um ponto no final e assim sucessivamente para outros operadores como __-.__ e __/.__ ._
+
+***Records***
+
+Em Reason não há interfaces como em TypeScript, ao invés disso temos algo bem parecido mas muito mais poderoso, que são os *Records* 
+e que por padrão já são imutáveis, assim como a maior parte das outras estruturas de dados de ReasonML.
+
+Veja um exemplo de um record abaixo:
+
+```reason
+type student = {
+ name: string,
+ age: int
+};
+```
+
+Há pouco contraste em relação a TypeScript, observe:
+
+```typescript
+interface Student {
+ name: string,
+ age: int
+}
+```
+
+A diferença você vai notar ao utilizar e declarar valores do tipo student. Vamos analisar dois exemplos que mostram de forma clara as diferenças:
+
+```reason
+let student = {
+ name: "Alonzo Church",
+ age: 22
+};
+```
+
+```typescript
+const student: student = {
+ name: "Alonzo Church",
+ age: 22
+}
+```
+
+Observe que da mesma forma que não declarei os tipos dos *parâmetros* no exemplo anterior, na hora de utilizar valores do tipo eu não 
+preciso anota-los, o que não é uma realidade em TypeScript se eu quiser restringir os valores a um tipo especifico.
+
+Veja o que acontece se eu tentar atribuir a propriedade *age*  um valor diferente de int:
+
+```javascript
+  // We've found a bug for you!
+  6 │ let student = {
+  7 │   name: "Alonzo Church",
+  8 │   age: ->"22"<-
+  9 │ };
+  
+  This has type:
+    string
+  But somewhere wanted:
+    int
+```
+
+O compilador nos diz que estamos tentando atribuir um valor do tipo *string* onde na verdade, determinamos que deveria ser um *int.*
+E assim como no primeiro exemplo, eu não precisei indicar ao compilador do Reason qual o tipo do valor que estou atribuindo a variável _student_,
+somente analisando a expressão _**`{ name: "Alonzo Church", age: 22 }`**_ o compilador vai em busca de tipos que fazem sentido para os _nomes_ e _tipos_ de propriedades
+do record que estou declarando.
+
+_Em TypeScript também é possível criar um objeto assim como este que criamos acima, sem a necessidade de anotar o tipo, entretanto o compilador do TS não 
+irá definir o valor como do tipo student e não irá evitar possíveis erros._
+
+O mesmo vale para se trabalhar funções que utilizam records:
+
+_**ReasonML**_
+```javascript
+ let greeting = student => "Hello " ++ student.name;
+```
+
+_**TypeScript**_
+```typescript
+const greeting = student => "Hello " + student.name
+
+```
+Não há necessidade de se anotar o tipo ao parâmetro. O compilador irá sempre analisar a expressão e deduzir qual o tipo do parâmetro.
+Em casos como esse, onde o parâmetro é um record, o compilador irá analisar a expressão _**" Hello" ++ student.name**_ e através do
+operador _++_ o mesmo sabe que _name_ também é uma string, já que este operador é usado somente para concatenação de strings. E sabendo o tipo
+de _name_ ele pode encontrar tipos que encaixem com esse contrato, no caso deste exemplo seriam records que contenham uma propriedade _name_ do tipo _string_.
+
+Como disse no começo desta seção, existem exceções quanto a inferência dos tipos em ReasonML. Records são um ótimo exemplo, já que poderiamos ter
+mais de um tipo com uma propriedade _name_ que seja do tipo _string_. Nestes casos especificos e não tão comuns assim, a anotação de tipos pode ser necessária.
+Vejamos o exemplo abaixo:
+```reason
+type student = {
+  name: string,
+};
+
+type person = {
+  name: string,
+  age: int
+};
+
+let getStudentName = student => student.name;
+
+getStudentName({ name: "Alonzo" })
+```
+
+- Declaramos um tipo student com uma propriedade _**name**_ do tipo string 
+- Declaramos um tipo _**person**_ com duas propriedades: _**name**_ e _**age**_
+- Definimos uma função _**getStudentName**_ que recebe um _**student**_ e retorna _**name**_
+- Em seguida executamos a função _**getStudentName**_ passando um valor que se encaixa com o tipo _**student**_, 
+já que possui um _**name**_ do tipo _**string**_.
+
+Executando esse código acima o compilador dará a seguinte mensagem:
+
+```javascript
+ 
+  10 │ let getStudentName = (student) => student.name;
+  11 │ 
+  12 │ getStudentName({ name: "Alonzo" })
+  
+  Some record fields are undefined: age
+```
+O que essa mensagem quer dizer é que estão faltando propriedades no record passado como parâmetro para a função, e essa propriedade é _**age**_.
+Logo, o que se pode observar é que o compilador deduziu que _**getStudenName**_ não recebe um parâmetro do tipo _**student**_ e sim do tipo _**person**_
+e isso ocorre por conta da ordem da declaração dos tipos. Mas isso não é um problema, existem diversos fatores que irão evitar esse tipo de situação
+como o escopo de definição do tipo e declaração das funções. Essas situações são exceções e não regras.
+
+Para informar ao compilador que a função receberá um parâmetro do tipo _**student**_, você pode anotar o tipo do parâmetro da seguinte forma:
+```reason
+let getStudentName = (student: student) => student.name;
+```
+
