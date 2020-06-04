@@ -1,3 +1,5 @@
+console.log('Process =>', process.env.GA_ID)
+
 module.exports = {
   siteMetadata: {
     title: `BlumenauJS - Blog`,
