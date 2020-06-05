@@ -104,11 +104,11 @@ Bom, vamos a alguns exemplos:
 
 ### Functions
 
-_TypeScript_
+__TypeScript__
 ```typescript
 const sum = (a: number, b: number) => a + b
 ```
-_Reason_
+__ReasonML__
 ```reason
 let sum = (a,b) => a + b;
 ```
@@ -150,6 +150,7 @@ e que por padrão já são imutáveis, assim como a maior parte das outras estru
 
 Veja um exemplo de um record abaixo:
 
+__ReasonML__
 ```reason
 type student = {
  name: string,
@@ -158,16 +159,17 @@ type student = {
 ```
 
 Há pouco contraste em relação a TypeScript, observe:
-
+__TypeScript__
 ```typescript
 interface Student {
  name: string,
- age: int
+ age: number
 }
 ```
 
 A diferença você vai notar ao utilizar e declarar valores do tipo __student__. Vamos analisar dois exemplos que mostram de forma clara as diferenças:
 
+__ReasonML__
 ```reason
 let student = {
  name: "Alonzo Church",
@@ -175,6 +177,7 @@ let student = {
 };
 ```
 
+__TypeScript__
 ```typescript
 const student: student = {
  name: "Alonzo Church",
@@ -215,7 +218,7 @@ __ReasonML__
  let greeting = student => "Hello " ++ student.name;
 ```
 
-__TypeScript__
+___TypeScript__
 ```typescript
 const greeting = student => "Hello " + student.name
 
@@ -229,6 +232,8 @@ de __name__, ele pode encontrar tipos que encaixem com esse contrato, no caso de
 Como disse no começo desta seção, existem exceções quanto a inferência dos tipos em ReasonML. Records são um ótimo exemplo, já que poderíamos ter
 mais de um tipo com uma propriedade __name__, que seja do tipo _string_. Nestes casos especÍficos e não tão comuns assim, a anotação de tipos pode ser necessária.
 Vejamos o exemplo abaixo:
+
+__ReasonML__
 ```reason
 type student = {
   name: string,
@@ -266,6 +271,8 @@ Isso ocorre por conta da ordem da declaração dos tipos. Mas isso não é um pr
 como o escopo de definição do tipo e declaração das funções. Essas situações são exceções e não regras.
 
 Para informar ao compilador que a função receberá um parâmetro do tipo __student__, você pode anotar o tipo do parâmetro da seguinte forma:
+
+__ReasonML__
 ```reason
 let getStudentName = (student: student) => student.name;
 ```
