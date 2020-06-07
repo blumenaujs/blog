@@ -8,34 +8,18 @@ excerpt: Neste artigo basicamente irei explicar porque você deveria adotar Reas
 
 ## Introdução
 
-De início quero me desculpar às pessoas que me pediram muito essa segunda parte da série _"O que é ReasonML?"_.
-Ocorreram muitas mudanças desde o primeiro post e eu acabei deixando de lado essa série de artigos.
-Nesta segunda parte, vou dar continuação ao artigo anterior, com objetivo de dar uma visão geral sobre o que é ReasonML, 
-onde ele pode ser usado e o porque você deveria optar por ele ao invés de TypeScript ou Flow. 
+Bom, algum tempo se passou desde a primeira parte deste artigo. Ocorreram muitas mudanças desde o primeiro post e eu acabei deixando de lado essa série.
+Nesta segunda parte, vou dar continuação ao artigo anterior, com objetivo de dar uma visão geral sobre o que é ReasonML e especificamente neste artigo,
+irei abordar quais as vantagens dele em relação a outras alternativas, como o TypeScript. 
 
 Se você não leu a primeira parte deste artigo, pare, leia, e volte aqui para continuar. A primeira parte contém informações muito 
 importantes sobre ReasonML e vai ser crucial para entender os tópicos que irei abordar aqui neste artigo.
+
 Esta é a segunda parte da série, em breve quero começar outra que será _"Como dar os primeiros passos 
-com ReasonML e React"_. Se tudo der certo, também devo lançar alguns vídeos no canal do [YT](https://www.youtube.com/channel/UCej3xR0REyuvYYAFz0SbswA) 
+com ReasonML e React"_. Se tudo der certo, também devo lançar alguns vídeos no canal do [YouTube](https://www.youtube.com/channel/UCej3xR0REyuvYYAFz0SbswA) 
 da [Lukin](https://lukin.co), onde vou passar o mesmo conteúdo sobre como iniciar em Reason com React, só que em formato de vídeo.
 
-Bom era isso, sem mais delongas, vamos falar de Reason!
-
-## Considerações sobre Reason nativo
-
-O objetivo deste artigo não é falar sobre ReasonML na plataforma nativa. Porém, é impossível não 
-mencionar o trabalho excepcional e com muito potencial que a comunidade Reason, vem fazendo na plataforma nativa.
-Como já havia mencionado no artigo anterior, o Revery funciona muito bem para desenvolver aplicações desktop 
-e graças ao suporte [embutido a JSX](https://reasonml.github.io/docs/en/jsx) na sintaxe do Reason, é possível utilizar _"React"_ para desenvolver aplicações 
-desktop utilizando Reason com Revery.
-
-_"React" entre aspas mesmo, pois não se trata do mesmo React que conhecemos para web e sim uma implementação 
-escrita em ReasonML que segue a mesma API que o React, mas que roda de forma nativa no lado do servidor._
-
-Vale mencionar também o trabalho incrível do [Eduardo](https://twitter.com/TheEduardoRFS), em tentar levar aplicações feitas com Revery para IOS e Android. 
-Se quiser saber mais sobre o progresso de Reason na plataforma nativa, vale a pena acompanhar as lives dele na [twitch](https://www.twitch.tv/eduardorfs).
-
-Pretendo fazer alguns posts sobre Reason nativo no futuro, mas por hora quero focar em Reason com React e Reason para ambientes JavaScript.
+Bom, dado esses avisos, vamos para o que interessa.
 
 ## Por que ReasonML?
 
@@ -43,9 +27,9 @@ Para responder essa pergunta, vou precisar _"cutucar algumas feridas"_ dos desen
 uma parte da comunidade em aceitar que JavaScript tem "características" (problemas de design)  que podem trazer complicações quando falamos de 
 colocar softwares em produção e trabalhar em projetos com bases de código consideravelmente grandes e com equipes maiores.
 
-Neste  [artigo]([https://rollbar.com/blog/top-10-javascript-errors/) a Rollbar, 
-uma empresa que trabalha com soluções para tracking de erros em aplicações, mostra através de dados coletados da sua platatforma, os __10 erros mais 
-comuns em aplicações JavaScript. O que se pode observar é que dos 10 erros listados, 7 deles são o que conhecemos por TypeErrors.
+Neste  [artigo]([https://rollbar.com/blog/top-10-javascript-errors/) da Rollbar, 
+uma empresa que trabalha com soluções para tracking de erros em aplicações, mostra através de dados coletados da sua plataforma, os _10 erros mais 
+comuns em aplicações JavaScript_. O que se pode observar é que dos 10 erros listados, 7 deles são o que conhecemos por _TypeErrors_.
 
 O fato de JavaScript ser uma linguagem dinamicamente e fracamente tipada, 
 pode e provavelmente vai te causar problemas em produção em algum momento. Qualquer desenvolvedor JavaScript com uma certa experiência, certamente já passou pela seguinte situação:
@@ -55,38 +39,55 @@ e se deparou com a seguinte mensagem:*
 
 ![Erro no console](./images/console-error.png)
 
-Isso apesar de ser comum, não deveria ser considerado normal pelos desenvolvedores JavaScript, que com o tempo, acostumou-se com esse tipo de 
-erro no ambiente de produção ou até mesmo durante o desenvolvimento. Desenvolvedores JavaScript, estão sempre lidando com esse tipo 
-de situação, e o que começou como uma simples _"característica"_ da linguagem, se torna uma dor de cabeça.
+Isso apesar de ser comum, não deveria ser considerado normal pelos desenvolvedores JavaScript, que com o tempo, acostumaram-se com esse tipo de 
+erro no ambiente de produção e principalmente durante o desenvolvimento. 
+
+Desenvolvedores JavaScript, estão sempre lidando com esse tipo 
+de situação, e o que começou como uma simples _"característica"_ da linguagem, se tornou uma dor de cabeça.
 
 ![This is fine](./images/this-is-fine.png)
 
-## Como evitar isso?
+## Possíveis soluções
 
 Bom, existem algumas formas de você evitar que esses erros aconteçam. Uma delas e a mais comum é  *programar de forma defensiva,* o que é péssimo, 
 pois no fim, você acaba se preocupando com coisas que não necessariamente você deveria se preocupar, como: _validar se você está somando valores do 
-tipo *number* com *strings*, tentar executar um *.map* em algo que não é um *array* e entre outras situações comuns para desenvolvedores JavaScript_.
+tipo *number* com *strings*, tentar executar um *.map* em algo que não é um *array*_ e entre outras situações comuns para desenvolvedores JavaScript.
 Por outro lado, existe um esforço em criar ferramentas que cuidem desses detalhes para você, por exemplo linters ou supersets como o TypeScript. 
 Certamente utilizar essas ferramentas ou supersets, vão te ajudar a evitar a passar por esses erros de runtime. 
 
-Alguns de vocês devem estar pensando agora: "*ah eu uso TypeScript, então eu já delego essas coisas para a linguagem"*  e é verdade! TypeScript é uma 
-opção para lidar com esses problemas. Porém, mesmo com TypeScript você pode acabar se deparando com alguns problemas semelhantes, já que TypeScript 
-_"adiciona tipos ao JavaScript" e, o mesmo foi feito para ter uma adoção gradual, ou seja, você ainda pode acabar lidando com essas situações, caso tenha 
-que utilizar o famoso *any* nas suas aplicações. 
+Nesse momento, você que está lendo este artigo, se é adepto e já trabalha com TypeScript nos seus projetos, deve estar pensando que ele já é suficiente para
+evitar esse tipo de erro mencionado acima. Porém, mesmo com TypeScript, você provavelmente vai acabar se deparando com problemas semelhantes, tendo em vista
+que o mesmo é apenas um superset para o JavaScript e foi totalmente pensado em permitir uma adoção gradual de sua utilização em projetos. Isso significa que,
+provavelmente em algum momento você precisará utilizar o famigerado _any_ do TS, em suas aplicações.
 
-Diferente do TypeScript ou até mesmo do Flow, Reason não tenta colocar tipos no JavaScript e sim _"colocar JavaScript nos tipos"_, como disse 
-o [@fakenickels](https://twitter.com/fakenickels) na sua [talk](https://www.youtube.com/watch?v=q1gPfQHpVjo) de ReasonML na ReactConf. E o quê isso significa? 
-Que Reason não vai adicionar um sistema de tipos ao JavaScript 
-e sim, trazer a __sintaxe__ do JavaScript para uma linguagem robusta, madura e estaticamente tipada, que é *OCaml.*
-Como eu havia dito na primeira parte do artigo, Reason é somente uma nova sintaxe, mais familiar a desenvolvedores JavaScript, para a linguagem OCaml. 
+Entendo a motivação da equipe do TypeScript e, estou ciente de que ele foi pensado em ser mais flexível desde o início. Meu ponto aqui é, TypeScript
+não resolve de fato todos os problemas relacionados a tipos e outras coisas mais, que nos deparamos ao escrever aplicações JavaScript.
 
-Mesmo que você não passe por problemas e erros de runtime utilizando TypeScript, certamente já se deparou com situações onde seu código se tornou muito 
-verboso e rolou anotação de tipos por quase todo o código. E se eu te dissesse que você pode desfrutar das vantagens de 
-se utilizar tipos e ainda assim (quase) nunca ter que anotá-los no seu código? Você não os vê, mas eles estão lá. 
+TypeScript é apenas um superset, portanto, ele apenas adiciona uma série de features ao JavaScript, e o sistema de tipos é uma dessas features.
+Um dos maiores contrastes entre ReasonML e TypeScript, certamente é o sistema de tipos. De forma bem superficial, podemos dizer que TypeScript, apenas
+tenta adicionar tipos ao JavaScript. Isso torna a adoção de TypeScript muito fácil aos desenvolvedores JS. Porém, por ser um superset, ele possui
+algumas desvantagens em relação a uma linguagem totalmente nova, já que ele herda também os problemas de design que JavaScript possui. 
 
-Nos próximos trechos, eu vou apresentar um pouco de como funciona o sistema de tipos do ReasonML na prática.
+Pensando que o sistema de tipos de TypeScript foi projetado para se comportar de forma mais flexível e gradual, ele não vai te dar muitas garantias, você realmente
+não pode confiar 100% no seu sistema de tipos, o que é péssimo, já que a confiabilidade e a garantia de tipos, é a maior vantagem de se utilizar linguagens estaticamente
+tipadas.
 
-## Tipos em ReasonML
+Já ReasonML, traz uma abordagem diferente, ele foi criado com o propósito de tornar OCaml, uma linguagem mais familiar aos desenvolvedores JavaScript.
+Por ser apenas uma sintaxe nova ao OCaml, Reason herda todas as features e decisões de design de uma linguagem funcional, compilada, _battle tested_, com um sistema de tipos poderoso e que
+evoluiu constantemente nos últimos 25 anos.
+
+## ReasonML e TypeScript
+
+A seguir, vou mostrar como é simples e elegante utilizar tipos em ReasonML, já que praticamente em nenhum momento é necessário anotar os tipos. 
+Isso, de longe é uma das maiores vantagens de se utilizar ReasonML, principalmente quando se comparado ao TypeScript, que apesar de possuir um certo nível 
+de inferência, ainda sim é muito inferior ao que vemos em Reason. 
+
+Além disso vou abordar alguns tópicos e técnicas presentes em ReasonML e tentar exibir algo equivalente em TypeScript, para mostrar de fato
+as vantagens que Reason tem em relação a ele. Algumas coisas como pattern matching e variants, irei abordar de forma superficial. Porém, vou deixar
+um material adicional no final do artigo, que com certeza vai te ajudar entender muito mais sobre esses tópicos. Em artigos futuros, pretendo abordar esses
+conceitos e técnicas, mas para isso preciso passar essa introdução a Reason.
+
+## 1. Tipos e Inferência de tipos
 
 Como eu disse anteriormente, o sistema de tipos de OCaml é incrível e muito poderoso. Ele permite você modelar seu software de uma maneira muito 
 clara e sem tirar a elegância da sua sintaxe. Como ReasonML é só uma sintaxe para OCaml, ele herda também o sistema de tipos. 
@@ -94,61 +95,54 @@ clara e sem tirar a elegância da sua sintaxe. Como ReasonML é só uma sintaxe 
 Não vou falar profundamente sobre como o sistema de tipos de OCaml/ReasonML funciona, daria para fazer uma série inteira falando somente sobre isso. 
 Meu objetivo aqui é mostrar a parte prática e o contraste disso com JavaScript e TypeScript. 
 
-O primeiro ponto a se destacar no sistema de tipos de ReasonML, é que quase tudo é inferido. Isso significa que 
-você precisa apenas __declarar__ seus tipos, mas não vai precisar __anotá-los__, na hora de utilizar. 
-
-Os exemplos de declaração de variáveis que apresentei na primeira parte do artigo, com valores do tipo *string* e *int* não são um bom exemplo 
-de contraste com TypeScript, já que ele também possui uma inferência, mas, que é infinitamente inferior a que ReasonML possui.
-
 Bom, vamos a alguns exemplos:
 
-### Functions
+### 1.1 Tipos básicos
+
+Nesse primeiro tópico não há muito o que falar. Tipos básicos como string, boolean, int e float, são bem simples de compreender em relação ao que está presente em TypeScript.
+Veja alguns exemplos:
+
+__ReasonML__
+```reason
+
+// string
+let name = "Alonzo";
+
+// boolean
+let isAdmin = true;
+
+// int
+let age = 22;
+
+// float
+let price = 20.5;
+
+```
 
 __TypeScript__
 ```typescript
-const sum = (a: number, b: number) => a + b
-```
-__ReasonML__
-```reason
-let sum = (a,b) => a + b;
-```
+// string
+const name = "Alonzo";
 
- Observe que eu não anotei nenhum tipo no segundo exemplo. No entanto, o compilador mesmo assim, sabe os tipos. 
- Se tentarmos utilizar esta função da seguinte forma:
+// boolean
+const isAdmin = true;
 
-```reason
-sum("10", 10);
-```
+// number
+const age = 22;
 
-O compilador vai mostrar o seguinte erro:
-
-```javascript
-  // We've found a bug for you!
- 
-  1 │ let sum = (a,b) => a + b;
-  2 │ 
-  3 │ sum(->"10"<-, 10);
-  
-  This has type:
-    string
-  But somewhere wanted:
-    int
+// number
+const price = 20.5;
 ```
 
-O compilador identificou que minha função recebe somente parâmetros do tipo __int__, e em __compile time__ e não em __runtime__ me indicou que estou utilizando a função da maneira errada. 
-Mas como ele sabe que esses parâmetros são do tipo __int__? O sistema de tipos consegue analisar a minha expressão __a + b__
-e deduzir que os parâmetros só podem ser do tipo int por conta do operador __+__, que em Reason só pode ser utilizado com integers. Dessa forma ele não só consegue nos garantir que estamos utilizando 
-a função da maneira correta, como também não exige que você anote os tipos em todas as funções, como ocorre em TypeScript.
+Aqui podemos notar algumas semelhanças e diferenças. A primeira é que ambos possuem inferência para esse nível de atribuição de tipos. O compilador do TypeScript assim como o de Reason, consegue
+inferir e identificar que o tipo de uma varíavel, através o valor que lhe é atribuída. A primeira diferença se dá no tipo __number__ do TypeScript e nos tipos, __int__ e __float__ de Reason.
+Em OCaml há distinção entre __int__ e __float__. No momento de atribuir um valor float, você apenas adiciona um __.__ ao valor. No mais as coisas são bem parecidas e tendem a não ter muitas diferenças.
 
-_Observe que há diferença entre integers e floats, se estivéssemos trabalhando com valores do tipo float o operador seria __+.__ , 
-com um ponto no final e assim sucessivamente para outros operadores como __-.__ e __/.__ ._
 
-## Records
+### 1.2 Records
 
 Em Reason não há interfaces como em TypeScript, ao invés disso temos algo bem-parecido, mas muito mais poderoso, que são os *Records* 
 e que por padrão já são imutáveis, assim como a maior parte das outras estruturas de dados de ReasonML.
-
-Veja um exemplo de um record abaixo:
 
 __ReasonML__
 ```reason
@@ -158,7 +152,6 @@ type student = {
 };
 ```
 
-Há pouco contraste em relação a TypeScript, observe:
 __TypeScript__
 ```typescript
 interface Student {
@@ -167,11 +160,16 @@ interface Student {
 }
 ```
 
-A diferença você vai notar ao utilizar e declarar valores do tipo __student__. Vamos analisar dois exemplos que mostram de forma clara as diferenças:
+Até aqui quase nenhuma diferença. Vamos analisar dois exemplos que mostram de forma clara as vantagens de Reason:
 
 __ReasonML__
 ```reason
-let student = {
+type student = {
+ name: string,
+ age: int
+};
+
+let someStudent = {
  name: "Alonzo Church",
  age: 22
 };
@@ -179,292 +177,712 @@ let student = {
 
 __TypeScript__
 ```typescript
-const student: student = {
+interface Student {
+ name: string,
+ age: number
+}
+
+const someStudent: Student = {
  name: "Alonzo Church",
  age: 22
 }
 ```
 
-Observe que da mesma forma que não declarei os tipos dos *parâmetros* no exemplo anterior, na hora de utilizar valores do tipo eu não 
-preciso anotá-los, o que não é uma realidade em TypeScript, caso eu queira restringir os valores a um tipo específico.
+Oberve que, em Reason em nenhum momento precisei informar ao compilador que a variável __someStudent__, é do tipo __student__.
+Já em TypeScript, para de fato informar ao compilador que a variável é do tipo __Student__, tive que anotar o tipo. Se não feita esta anotação,
+o compilador irá entender que __someStudent__ é do tipo __{ name: string, age: number }__ e não do tipo __Student__, como é declarado acima, através de uma interface.
 
-Veja o que acontece, se tentarmos atribuir a propriedade __age__, um valor que não seja do tipo __int__:
+Em TypeScript, se a variável __someStudent__, não possuir a anotação de que ela é do tipo __Student__, é possível declarar o objeto de maneira incorreta. Por exemplo,
+poderíamos atribuir a __age__ uma string e o compilador não teria como nos dizer que cometemos um erro. Veja:
+
+__TypeScript__
+```typescript
+interface Student {
+ name: string,
+ age: number
+}
+
+// Sem anotação
+const someStudent = {
+ name: "Alonzo Church",
+ age: "22"
+}
+```
+
+Nesse exemplo, onde não há anotação de tipo para __someStudent__, o compilador do TS não consegue identificar que __someStudent__ é do tipo __Student__, portanto nos
+permite cometer um erro, atribuindo a __age__ um valor do tipo string. Para restringir e extrair o melhor do compilador, seria necessário anotar o tipo, como fizemos no primeiro exemplo.
+
+Já em Reason, isso é responsabilidade do compilador. Mesmo que eu não anote o tipo, o compilador sabe de qual tipo se trata aquele valor que está sendo atribuído.
+Logo, se  tentarmos atribuir a __age__ um valor do tipo __string__, o compilador nos dará a seguinte mensagem:
 
 ```javascript
   // We've found a bug for you!
-  6 │ let student = {
-  7 │   name: "Alonzo Church",
-  8 │   age: ->"22"<-
+  
+  6 │ let someStudent = {
+  7 │  name: "Alonzo Church",
+  8 │  age: ->"22"<-
   9 │ };
   
   This has type:
-    string
+    ->string<-
   But somewhere wanted:
     int
 ```
 
-O compilador nos diz que estamos tentando atribuir um valor do tipo *string* onde na verdade, determinamos que deveria ser um *int.*
-E assim como no primeiro exemplo, eu não precisei indicar ao compilador do Reason qual o tipo do valor que estou atribuindo a variável _student_,
-somente analisando a expressão __`{ name: "Alonzo Church", age: 22 }`__ o compilador vai em busca de tipos que fazem sentido para os _nomes_ e _tipos_ de propriedades
-do record que estou declarando.
+Além disso, Reason é muito mais rígido do que TypeScript quando se trata de declarar e trabalhar com records. O primeiro ponto, é a imutabilidade.
+Em TypeScript, seria simples alterar qualquer valor de um objeto. Já em Reason, ao tentar alterar o valor de __name__, ele nos dará o seguinte erro:
 
-_Em TypeScript, também é possível criar um objeto assim como este que criamos acima, sem a necessidade de anotar o tipo. No entanto, o compilador do TS não 
-irá definir o valor como do tipo student e não irá evitar possíveis erros._
-
-O mesmo vale para se trabalhar funções que utilizam records:
-
-__ReasonML__
 ```javascript
- let greeting = student => "Hello " ++ student.name;
+ // We've found a bug for you!
+   9 │ };
+  10 │ 
+  11 │ someStudent.name = "Church";
+  
+  The record field name is not mutable
 ```
 
-___TypeScript__
+Ou seja, record é uma estrutura de dados imutável por padrão, o que é um grande ganho, já que trabalhar com imutabilidade traz inúmeros benefícios.
+
+Outro ponto importante sobre os records, é que não é possível atribuir a uma variável um valor do tipo record, sem antes declarar ao compilador que aquele tipo existe.
+Isso significa que, se tirarmos o trecho onde declaramos o tipo __student__, o compilador nos dará a seguinte mensagem de erro:
+
+```javascript
+  // We've found a bug for you!
+  1 │ 
+  2 │ let someStudent = {
+  3 │  name: "Alonzo Church",
+  4 │  age: 22
+  5 │ };
+  
+  The record field "name" can't be found.
+```
+
+Observe que o compilador disse que não encontrou uma propriedade chamada "name". A princípio essa mensagem pode ser um pouco estranha. Mas, isso acontece, por conta 
+da forma como Reason identifica e deduz os tipos. Para identificar um tipo, sem que ele seja declarado, o compilador sempre irá analisar a expressão que se segue 
+após o __=__ . Analisando a expressão `{ name: "Alonzo Church", age: 22 }`, Reason identifica que está atribuindo um valor do tipo __record__ e sai em busca
+de _tipos declarados_ que se encaixem exatamente com os mesmos _nomes_ (name) e _tipos_ (string) das propriedades atribuídas a variável. Caso ele não encontre nenhum tipo declarado que corresponda
+ao que foi atribuído como valor a variável, ele dará como mensagem de erro que não encotrou _X_ propriedade (no nosso caso o name), declarado como _field_ de um 
+record.
+
+Embora possa parecer uma coisa ruim não poder atribuir valores do tipo record, sem ter que criar um tipo, isso na verdade é uma vantagem. Reason, diferente de TypeScript,
+não utiliza o sistema de tipos, como só mais uma feature. Ele utiliza o sistema de tipos para te guiar a modelar seu software, de maneira que, você sempre denomine
+e atribua tipos aos valores que você está manipulando. O sistema de tipos irá te guiar sempre e isso é uma enorme vantagem.
+
+
+### 1.3 Listas e Arrays
+
+Quando se fala de listas e arrays em Reason, algumas coisas precisam ser esclarecidas para quem está conhecendo OCaml ainda. No artigo anterior, mencionei uma diferença
+na sintaxe de declarações entre listas e arrays. O que não mencionei e deixei para tratar neste artigo, é a diferença prática entre as duas. Na tabela abaixo, é possível identificar
+algumas diferenças e casos de uso melhores para cada uma das estruturas de dados:
+
+<table class="framed">
+  <thead>
+  <tr>
+  <th></th>
+  <th>Listas</th>
+  <th>Arrays</th>
+  </tr>
+  </thead>
+<tbody>
+  <tr>
+  <td>Tamanho</td>
+  <td>Pequenas a Médias</td>
+  <td>Pequenas a Grandes</td>
+  </tr>
+  <tr>
+  <td>Redimensionável</td>
+  <td>Flexível</td>
+  <td>Tamanho fixo</td>
+  </tr>
+  <tr>
+  <td>Mutável</td>
+  <td>Não</td>
+  <td>Sim</td>
+  </tr>
+  <tr>
+  <td>Form de acessar elementos</td>
+  <td>Desestruturação</td>
+  <td>Index</td>
+  </tr>
+  <tr>
+  <td>Casos de uso mais rápido</td>
+  <td>Prefixar e Remover</td>
+  <td>Ler e Adicionar elementos</td>
+  </tr>
+</tbody>
+</table>
+
+Em contraste com TypeScript existe uma diferença crucial a ser mencionada. Lists e arrays, só podem armazenar elementos do mesmo __tipo__. Em TypeScript, encontramos essa flexibilidade, como podemos ver nos exemplos abaixo:
+
+__TypeScript__
 ```typescript
-const greeting = student => "Hello " + student.name
-
+const names = ["Alonzo", 22]
 ```
-Não há necessidade de se anotar o tipo ao parâmetro. O compilador irá sempre analisar a expressão e deduzir qual o seu tipo.
-
-Em casos como esse, onde o parâmetro é um record, o compilador irá analisar a expressão __" Hello" ++ student.name__ e através do
-operador __++__, o mesmo sabe que __name__ também é uma string, já que este operador é usado somente para concatenação de strings. Sabendo o tipo
-de __name__, ele pode encontrar tipos que encaixem com esse contrato, no caso deste exemplo seriam records que contenham uma propriedade __name__ do tipo __string__.
-
-Como disse no começo desta seção, existem exceções quanto a inferência dos tipos em ReasonML. Records são um ótimo exemplo, já que poderíamos ter
-mais de um tipo com uma propriedade __name__, que seja do tipo _string_. Nestes casos especÍficos e não tão comuns assim, a anotação de tipos pode ser necessária.
-Vejamos o exemplo abaixo:
 
 __ReasonML__
 ```reason
-type student = {
-  name: string,
-};
+let names = ["Alonzo", 22];
+```
+Se tentarmos executar o exemplo acima, o compilador do Reason nos dará a seguinte mensagem:
 
+```javascript
+  // We've found a bug for you!
+
+  1 │ 
+  2 │ let names = ["Alonzo", 22];
+  
+  This has type:
+    int
+  But somewhere wanted:
+    string
+```
+
+### 1.4.Functions
+
+Aqui está uma das maiores diferenças até o momento. Para extrair o "melhor" de TypeScript quase sempre é necessário anotar os tipos em funções.
+Em ReasonML, é o inverso, dificilmente você precisará anotar os tipos nas funções. Isso é possível graças ao poderoso sistema de tipos que Reason herda de OCaml.
+Através da expressão da função, Reason consegue identificar e deduzir o tipo que os parâmetros de uma função possuem e o que ela irá retornar.
+
+Vamos a alguns exemplos:
+
+__TypeScript__
+```typescript
+  // Sem anotação
+  const greeting = name => "Hello " + name
+
+  // Com anotação
+  const greeting  = (name: string) => "Hello " + name
+```
+__ReasonML__
+```reason
+  let greeting = name => "Hello " ++ name;
+```
+
+Se você executar o primeiro exemplo de código, no [playground oficial do TypeScript](https://www.typescriptlang.org/play/?ssl=1&ssc=1&pln=5&pc=32#code/ATDGHsDsGcBdgOYCcCmLYEtIOAXmJAIYC2KeAfMAEQASKANveNcANQEkoBQQA), é possível ver que o parâmetro __name__, é do tipo _any_. Para que o
+compilador saiba que o mesmo é do tipo string, deverá anotar o tipo como fiz na segunda linha. 
+
+Já em Reason, não é necessário informar ao compilador qual o tipo
+do parâmetro. Através da expressão, ele consegue deduzir que o tipo será __string__. E como ele faz isso? Bom, ele irá avaliar usando os seguintes passos:
+
+- __greeting__ está recebendo um valor que é uma função que possui somente um parâmetro
+- Para identificar qual o tipo desta função como um todo, é necessário identificar o tipo do parâmetro
+- Analisando a primeira parte expressão __"Hello " ++__ o compilador consegue identificar que estamos tentando realizar uma concatenação com a string __"Hello "__, utilizando o operador __++__
+- Analisando a segunda parte da expressão, ele sabe que o parâmetro está nessa operação de concatenação, logo, o compilador consegue identificar que o mesmo é do tipo string,
+tendo em vista que só é possível concatenar um valor do tipo string, com outro valor do tipo string
+
+A assinatura desta função ficaria assim:
+
+```reason
+let greeting: string => string;
+```
+
+## 2. Functions
+
+Funções são features importantes em todas as linguagens e, nas funcionais, elas possuem muitas vantagens em relação a outras mais populares como JavaScript ou Java.
+Em ReasonML isso não é diferente, uma das features que o tornam mais poderoso, são as funções. As funções em ReasonML e assim como em outras linguagens funcionais possuem features como 
+[currying](https://reasonml.github.io/docs/en/function#currying) e [argumentos nomeados](https://reasonml.github.io/docs/en/function#labeled-arguments), que irei abordar nos próximos trechos.
+
+### 2.1 Argumentos nomeados
+Argumentos nomeados apesar de serem pouco conhecidos por desenvolvedores JavaScript, não é algo novo. Algumas linguagens como Python e Ruby já possuem há um bom tempo.
+Reason possui argumentos nomeados e quando combinados com [pipe operators](https://reasonml.github.io/docs/en/pipe-first) e currying, facilitam e muito a composição de funções. 
+
+Para informar ao compilador que um parâmetro é nomeado, basta adicionar um __~__ antes do nome do argumento. Isso facilita na hora de executarmos uma função, já que os argumentos possuem nomes e
+não é necessário passar os argumentos respeitando a ordem utilizada na declaração da função. 
+
+Veja o exemplo abaixo:
+
+__ReasonML__
+```reason
+let sayHello = (~name, ~lastname) => "Hello " ++ name ++ " " ++ lastname;
+
+sayHello(~lastname="Church", ~name="Alonzo"); // Hello Alonzo Church
+```
+
+_Note que não precisei passar os argumentos na mesma ordem em que eles são declarados na função. De primeiro momento essa feature pode não parecer tão útil, mas se combinada a próxima, é muita poderosa._
+
+Em TypeScript, as funções não possuem argumentos nomeados. O mais próximo disso, é um hack comum utilizado por desenvolvedores, onde ao invés de adicionar dois ou mais parâmetros a função, é utilizada somente um parâmetro 
+do tipo _objeto_. Dessa forma é possível passar argumentos para a função, sem se preocupar com a ordem.
+
+__TypeScript__
+```typescript
+const sayHello = ({ name, lastname }) => "Hello " + name + " " + lastname;
+
+sayHello({ lastname: "Church", name: "Alonzo" })
+```
+
+De certa forma, é um hack aceitável. Porém extremamente limitado e que traz algumas desvantagens. Uma delas seria que o tipo do parâmetro seria sempre __any__, logo você perde a segurança de estar
+passando os parâmetros com os tipos corretos. Caso você queira manter a segurança dos tipos, seria necessário criar uma interface ou anotar os tipos inline.
+
+### 2.2 Currying
+
+Funções em Reason podem ser aplicadas de [forma parcial](https://reasonml.github.io/docs/en/function#currying). 
+Isso signifca, que podemos executar uma função e não passar todos os parâmetros de uma vez só. Veja um exemplo de como funciona aplicação parcial:
+
+```javascript
+let sum = (a, b) => a + b; // Linha  A
+
+let addOne = sum(1); // Linha  B
+
+addOne(2); // Linha  C
+``` 
+
+Para entender este exemplo é preciso entender que em ReasonML, uma função recebe sempre __um argumento__. Por mais que pareça passar mais de dois argumentos, o que acontece, é que na verdade uma função que recebe
+mais de um argumento, utiliza somente o primeiro argumento e retorna uma outra função com o segundo argumento. Para entender melhor, vou tentar exemplificar utilizando TypeScript:
+
+```typescript
+const sum = a => b => a + b;
+
+const addOne = sum(1);
+
+addOne(2);
+
+// ou
+
+sum(1)(2);
+```
+Veja que nesse exemplo, estamos criando uma função que ao invés de receber __dois argumentos__, ela recebe um argumento e retorna uma outra função que recebe __um argumento__. Logo seria possível, criar uma nova função,
+a partir de __sum__, uma função que sempre execute algo como:
+
+```typescript
+const addOne = b => sum(1)(b);
+```
+
+No entanto podemos fazer algo mais simples e atribuir o retorno de __sum__ a uma nova variável, já que o retorno de sum já é uma outra função. 
+
+Em Reason, isso é algo que acontece por padrão em todas as funções.
+Mesmo que você indique que uma função tem __2 argumentos__, na verdade ela sempre é entendida como uma função que recebe um argumento e retorna outra função que também recebe um argumento, e assim sucessivamente conforme a quantidade
+de argumentos que for determinada na função.
+
+Esse comportamento é o que conhecemos por currying em programação funcional. Essa é a principal feature para viabilizar composição de funções em Reason e outras linguagens funcionais.
+
+_É possível emular este comportamento em TypeScript, mas está longe de ser tão poderoso quanto, já que toda função teria que retornar uma outra função e assim sucessivamente, e
+isso implicaria na legibilidade do código._
+
+### 2.3 Currying + Argumentos nomeados
+
+Bom, apresentei o que são argumentos nomeados e currying e também mostrei como os utilizar de forma separada. Porém, essas duas features combinadas, são muito poderosas e vão tornar a sua vida muito fácil. 
+
+Veja um exemplo abaixo:
+
+```reason
+let message = (~text, ~name) => text ++ " " ++ name;
+
+let sayHello = message(~text="Hello");
+
+let messageToAlonzo = message(~name="Alonzo");
+
+sayHello(~name="Alonzo Church"); // Hello Alonzo Church
+
+messageToAlonzo(~text="Hi!"); // Hi! Alonzo Church
+```
+
+Observe que combinei a aplicação parcial aos argumentos nomeados e isso me permitiu compor várias outras funções a partir de uma mesma função. Isso é uma das muitas formas de se compor funções e essa é uma das técnicas mais utilizadas por desenvolveres OCaml/ReasonML.
+
+## 3. Pattern matching
+
+Essa é uma das minhas features preferidas. Assim como currying, ela é muito comum em linguagens funcionais, mas bem desconhecida para desenvolvedores de linguagens _mainstream_.
+O que vou apresentar nos próximos trechos, vai mudar a forma como você enxerga condicionais como __if__.
+
+### 3.1 O que é?
+
+_Pattern matching_, como o próprio nome diz, é a _busca por um padrão_. De primeiro momento ele vai se parecer muito com a _desestruturação_ presente em JavaScript. Mas não se engane, ele é muito mais
+poderoso. 
+
+Pattern matching é usado basicamente para dois propósitos:
+
+- Encontrar valores presentes em estruturas de dados (matching)
+- Extrair parte dos dados (destructuring) 
+
+### 3.2 Como utilizar?
+
+A sintaxe de pattern matching no primeiro momento, se parece muito com o `switch case` de JavaScript. Como mencionei acima, ele pode ser utilizado para encontrar dados e extrair partes de dados.
+Para exemplificar a busca por um padrão de dados, vou utilizar valores do tipo int e depois mostrar exemplos com tipos mais complexos, como records.
+
+Veja o exemplo a seguir:
+
+__ReasonML__
+```reason
+let year = 1;
+
+let message = switch year {
+ | 1 => "1 ano"
+ | 2 => "2 anos"
+};
+```
+
+Observe atentamente o que está acontecendo neste exemplo. Após definir a variável __year__, defini uma variável __message__ que irá receber o resultado de uma expressão switch. No entanto, observe o que acontece a partir da
+palavra reservada __switch__: passei a variável __year__, indicando que quero realizar uma busca por um padrão, a partir do valor desta variável. 
+Nas próximas linhas, vou mapeando os possíveis valores que __year__ pode ter:
+- Na primeira, caso seja o valor __1__, indico que deve retornar a string __"1 ano"__
+- Na segunda, caso seja o valor __2__, indico que deve retornar a string __"2 anos"__
+
+Essa é a forma mais simples de se utilizar pattern matching. Neste exemplo estamos usando para _encontrar um padrão_ a partir do valor de uma variável.
+
+Se executar este código, o compilador do Reason nos dará a seguinte mensagem:
+
+```javascript
+  1 │ let year = 1;
+  2 │ 
+  3 │ let message = switch year {
+  4 │  | 1 => "1 ano"
+  5 │  | 2 => "2 anos"
+  6 │ };
+  
+  'You forgot to handle a possible case here, for example:'
+  => 0
+```
+_"Você esqueceu de mapear um caso aqui, por exemplo: 0"_. É exatamente isso que o compilador quer dizer, que esqueci de mapear uma possibilidade, neste caso o 0.
+Vou alterar o código, para tratar este caso, executar o código e o compilador nos dará outra mensagem:
+
+```javascript
+  1 │ let year = 1;
+  2 │ 
+  3 │ let message = switch year {
+  4 │  | 0 => "Zero"
+  5 │  | 1 => "1 ano"
+  6 │  | 2 => "2 anos"
+  7 │ };
+  
+  'You forgot to handle a possible case here, for example:'
+  => 3
+```
+Bom, a primeira vista pode ser estranho, mas faz todo sentido, as possibilidades de um valor do tipo __int__ são inúmeras, então o compilador vai sempre nos informar de que está faltando
+mapear mais uma possibilidade. O nome disso é _exhaustiveness checking_ e com certeza vai te poupar alguns bugs, caso você utilize Reason em produção.
+
+_Até aqui nada novo, TypeScript também possui um certo nível de exaustão em expressões como o switch case. Esta primeira parte foi apenas para tornar mais familiar a sintaxe
+do switch e as mensagens que o compilador pode retornar._
+
+Bom, para resolver esse warning do compilador, nós vamos utilizar a _extração_ de valores do pattern matching. Veja o exemplo abaixo:
+
+__ReasonML__
+```reason
+let year = 1;
+
+let message = switch year {
+ | 0 => "Zero"
+ | 1 => "1 ano"
+ | value => string_of_int(value) ++ " anos"
+};
+```
+Observe que removi a linha onde mapeava a possibilidade do valor __2__ e adicionei uma nova expressão, onde atribuo o valor de __year__ a uma variável __value__. Isso quer dizer algo como
+"para qualquer valor, que não seja uma das possibilidades acima (__0__ ou __1__), quero chamá-lo de __value__" e partir disso nós podemos manipular value na expressão que se segue após __=>__.
+
+### 3.2 Pattern matching + records
+
+Pattern matching pode ser utilizado para qualquer estrutura de dado em ReasonML. Para mostrar como funciona a extração de dados, vou utilizar records como exemplo desta seção.
+
+Imagine o seguinte caso: Um tipo person que possui as propriedades __name__ e __age__. Agora, pense que você possui um valor do tipo __person__ e precisa dar uma mensagem
+que irá variar de acordo com o valor de __age__ e __name__. 
+
+Veja o exemplo seguir:
+
+```reason
 type person = {
   name: string,
   age: int
 };
 
-let getStudentName = student => student.name;
+let somePerson = {
+  name: "Marcos",
+  age: 22
+};
 
-getStudentName({ name: "Alonzo" })
+let message = switch somePerson {
+  | { name: "Marcos", age: 22 } => "Marcos tem 22 anos"
+  | { name, age } => name ++ " : " ++ string_of_int(age)
+};
 ```
+Observe que aqui estou utilizando a _busca por um padrão (matching)_ e a _desestruturação_. Dessa forma eu posso criar condicionais de forma mais granular e acessar cada propriedade do record.
 
-- Declaramos um tipo __student__ com uma propriedade __name__ do tipo string.
-- Declaramos um tipo __person__ com duas propriedades: __name__ e __age__.
-- Definimos uma função __getStudentName__, que recebe um __student__ e retorna __name__.
-- Em seguida executamos a função __getStudentName__ passando um valor que se encaixa com o tipo __student__, 
-já que possui um __name__ do tipo __string__.
-
-Executando esse código acima, o compilador dará a seguinte mensagem:
-
-```javascript
- 
-  10 │ let getStudentName = (student) => student.name;
-  11 │ 
-  12 │ getStudentName({ name: "Alonzo" })
-  
-  Some record fields are undefined: age
-```
-O que essa mensagem quer dizer é que estão faltando propriedades no record, que passamos como parâmetro para a função, essa propriedade é __age__.
-Logo, o que se pode observar, é que o compilador deduziu que __getStudenName__ não recebe um parâmetro do tipo __student__ e sim do tipo __person__.
-Isso ocorre por conta da ordem da declaração dos tipos. Mas isso não é um problema, existem diversos fatores que irão evitar esse tipo de situação,
-como o escopo de definição do tipo e declaração das funções. Essas situações são exceções e não regras.
-
-Para informar ao compilador que a função receberá um parâmetro do tipo __student__, você pode anotar o tipo do parâmetro da seguinte forma:
+Também é possível utilizar operadores lógicos como __>__ ou __<__, através da palavra reservada __when__.
 
 __ReasonML__
 ```reason
-let getStudentName = (student: student) => student.name;
+type person = {
+  name: string,
+  age: int
+};
+
+let somePerson = {
+  name: "Marcos",
+  age: 22
+};
+
+let message = switch somePerson {
+  | { name: "Marcos", age } when age < 25 => "Marcos tem menos que 22 anos"
+  | { name, age } => name ++ " : " ++ string_of_int(age)
+};
+```
+Após a palavra reservada __when__, eu tenho acesso as propriedades que obtive pela desestruturação e posso utilizar para fazer alguma lógica que irá complementar o __matching__, presente
+na primeira parte da expressão.
+
+### 3.3 Considerações e contraste com TypeScript
+
+Apesar de não ter apresentado, é possível utilizar pattern matching com estruturas de dados como _tuplas_ ou _listas_. Não inclui nesta seção, para não deixá-la maior do que já está, mas, se você se tiver interesse 
+em conhecer mais essa feature, vou deixar um material adicional no final do artigo.
+
+Como switch case é uma feature comum em linguagens mainstream, decidi não incluir exemplos de TypeScript. No entanto, o que posso ressaltar,
+é que de fato, pattern matching de Reason, tem inúmeras vantagens em relação ao seu "equivalente" em TypeScript. Switch case convencional não possui um grau de granularidade e condicionais tão idiomáticos
+como pattern matching possui. Para se chegar a um resultado semelhante em linguagens como TS ou JS, é necessário combinar switch e condicionais com if, o que pode e provavelmente vai ser péssimo para legibilidade.
+
+
+
+*Existe uma proposta no __tc39__ para adicionar [pattern matching ao JavaScript](https://github.com/tc39/proposal-pattern-matching), vale a pena conferir.*
+
+## 4. Variants e Enums
+
+### 4.1 O que são?
+
+Variant types são muito comuns em linguagens funcionais como OCaml. Elas não são tão conhecidas pelos desenvolvedores de linguagens como
+Java, JS e C#. No entanto, é um tipo de dado muito poderoso e uma das features mais importantes de OCaml.
+
+A primeira vista, variants podem ser confundidas como as enums presentes em TypeScript, mas não se engane, apesar da semelhança, elas são muito mais que isso
+e abrem uma série de técnicas e possibilidades que te guiam a modelar seu software de uma maneira muito mais coerente.
+
+### 4.2 Como utilizar?
+
+Existem basicamente duas formas de se utilizar variant types. A primeira, é utilizá-lo como "símbolo". Quando utilizado desta forma, se parecem muito com enums.
+Veja alguns exemplos de como seriam _"variants as symbols"_:
+
+__ReasonML__
+```reason 
+type status =  | Loading | Error | Success;
+
+let currentStatus = Loading;
 ```
 
-## Null, Undefined & Option
+Até aqui nenhuma novidade em relação ao TypeScript. É possível declarar um enumerador, que funciona da mesma forma.
 
-Essa é uma das melhores partes quando se fala do sistema de tipos de OCaml/ReasonML. Diferente de JavaScript e TypeScript,
+Já a segunda forma, é muito mais interessante, pois podemos utilizar variants que _"seguram"_ um ou mais valores.
+
+Para entender melhor, veja o exemplo abaixo:
+
+```reason
+type pet = | Dog(string) | Cat;
+```
+
+Assim como no exemplo anterior, eu defini __2 constructors__ para meu type __pet__, sendo eles  __Dog__ e __Cat__. No entanto, neste exemplo, esses variants funcionam não como
+um símbolo, mas sim, como uma "caixinha" que segura valores. 
+
+Veja um exemplo de como utilizar esse variant type na prática:
+
+```reason
+type pet = | Dog(string) | Cat;
+
+let bob = Dog("bob");
+let someDog = Dog("billy");
+let someCat = Cat;
+```
+
+Nesse momento, a variável __bob__ é definida como um __Dog__ que "segura" um valor do tipo string, que seria o nome do pet. Para fazer o equivalente em TypeScript, teríamos que combinar
+__interfaces__ e __enums__.
+
+Veja o mesmo exemplo em TypeScrpt:
+
+```typescript
+enum PetEnum {
+  CAT,
+  DOG
+}
+
+interface Pet {
+  type: PetEnum,
+  name?: string
+}
+
+const someDog: Pet = { type: PetEnum.DOG, name: "billy" }
+const someCat: Pet = { type: PetEnum.CAT }
+const bob: Pet = { type: PetEnum.DOG, name: "bob" }
+```
+
+Observe como o exemplo se torna mais complexo e não é tão direto como em Reason. Além disso, também vamos ter que trabalhar valores __nuláveis__, que é o caso do __name__, já que apenas o tipo __dog__ irá possuir um nome.
+
+Imagine agora, que você precisa de uma função que retornará uma mensagem, de acordo com o tipo do __pet__ e do valor de __name__.
+
+Veja como podemos fazer isso em TypeScript:
+
+```typescript
+enum PetEnum {
+  CAT,
+  DOG
+}
+
+interface Pet {
+  type: PetEnum,
+  name?: string
+}
+
+const someCat: Pet = { type: PetEnum.CAT }
+const someDog: Pet = { type: PetEnum.DOG, name: "billy" }
+const bob: Pet = { type: PetEnum.DOG, name: "bob" }
+const dogWithoutName: Pet = { type: PetEnum.POG } // Linha A
+
+const petMessage = (somePet: Pet) => {
+  switch (somePet.type) {
+    case PetEnum.DOG:
+      if (somePet.name === "bob") return "Este é meu cachorro, bob"
+      return "O nome deste cachorro é " + somePet.name
+    case PetEnum.CAT:
+      return "Isso não é um cachorro e sim um gato"
+  }
+}
+```
+Existem alguns pontos neste código que merecem ser comentados:
+
+- O primeiro, é que é necessário anotar o tipo do argumento __somePet__, como __Pet__.
+- O segundo, é a perda de declaratividade, já que foi necessário combinar __switch__ e __if__.
+- O terceiro e último, é que perdemos a segurança de que todo __Dog__ possui um nome. É totalmente possível atribuir um valor que possua o __type__ com __PetEnum.DOG__ e não definir um name, 
+como fiz na linha _linha A_, e o compilador sequer faz ideia de que isso está acontecendo. 
+
+Se executarmos o código abaixo teríamos um resultado não muito agradável:
+
+```typescript
+const dogWithoutName = { type: PetEnum.POG } 
+
+petMessage(dogWithoutName)
+```
+A saída seria: __O nome deste cachorro é undefined__.
+
+_Antes que alguém critique este último exemplo, afirmando que não fiz uso de union types e types para os tipos __Dog__ e __Cat__, [aqui está um exemplo](https://www.typescriptlang.org/play/?ssl=1&ssc=1&pln=35&pc=2#code/KYOwrgtgBACsAuBRc0DeAoKUDCBBAKgDSZQAiA8gOLoC+668AngA7BkD2A5lALxQZYQAQwjAAXFADO8AE4BLEJ2JYmrCXCQpa9VW2xD4vfiV3qEySNoYs2Go6S5QAPjgMBuegGN2IaVPaiDpwSQUaoUCTCohIARABG7HExylCmsOYoAHQU1HTo3r6GkgHA+vASZWEmNmaakJl4+FYFfqzwALLAkpJCnGx8ABTFohq1AJS8AHzGWJIA7nLwngAWUEMlGpm6EwJYUJ5CkrYZ9TliJHtQADYIqcvAoXzDwHaHHJwel1hyAGZr8Pcgpkov0eHx4okYhMZAgwDIQFAYohpGwAJdQURgfZCFbsGQydiEKAJJIXPYw+BwhExchQEAlKAAEy68DYB1x+PYUHRMSgAGo7g8uMCRMAyQcjuk6hAGgRzl8oBSqYiAJLdLkgADHXPRkGxHIJUDYkjk0D1nAM7BiJDoNCAA) de como ficaria a mesma implementação fazendo uso dessas features.
+Para um exemplo muito simples como este, de fato, não haveriam problemas com valores nuláveis, no entanto, ainda não se compara com a declaratividade que ReasonML possui, fazendo uso de pattern matching. Ainda mais em situações
+reais e com casos de usos mais complexos, do que os apresentados acima._
+
+Já em ReasonML, isso fica muito simples. Podemos combinar os variants e pattern matching, para modelarmos a nossa função, de forma que nenhum caso fique para trás e que não corramos o risco de obter saídas inesperadas.
+
+Veja:
+
+```reason
+type pet = | Dog(string) | Cat;
+
+let bob = Dog("bob");
+let someDog = Dog("billy");
+let someCat = Cat;
+
+let petMessage = somePet => switch somePet {
+  | Dog("bob") => "Este é meu cachorro, bob!"
+  | Dog(name) => "O nome deste cachorro é " ++ name
+  | Cat => "Isso não é um cachorro e sim um gato"
+};
+```
+Veja, como isso é idiomático na linguagem. Não precisei adicionar nenhum condicional, apenas determinei quais padrões existem e quais saídas elas teriam. Também é impossível que haja um __Dog__ sem name, pois só é possível 
+utilizar o constructor __Dog__, se passado uma __string__ como o valor a ser "segurado".
+
+Outra clara vantagem é delegar ao compilador a responsabilidade de me avisar se estou tratando todos os casos possíveis, como por exemplo: Não mapear o caso de o pet ser um __Cat__ e entre outras situações.
+
+
+### 4.3 Considerações
+
+É possível utilizar variants que "segurem" outros tipos de dados como __records__ ou __listas__. Assim como na seção anterior, não adicionei mais casos de uso, para não deixar ainda maior a seção.
+Caso você se interesse mais por variants em Reason, vou deixar também um material adicional sobre isso no final do artigo.
+
+## 5. Null, Undefined e Option
+
+Essa é uma das melhores partes do sistema de tipos de OCaml/ReasonML. Diferente de JavaScript e TypeScript,
 Reason não possui valores do tipo _null_ ou _undefined_. Esse é também um dos motivos pelo qual utilizar Reason nas suas aplicações 
-pode tornar elas "inquebráveis". 
+vai torna-las "inquebráveis". 
 
 Como falei no começo deste artigo, um dos erros mais comuns é o famigerado **cannot read 'name' property of undefined**.
 Em Reason isso jamais vai acontecer, tendo em vista que a linguagem te guia a tratar esses pontos de falha de uma maneira mais elegante, do que programar de forma defensiva.
 
 Basicamente, quando você possui um valor em Reason, que possivelmente pode ser "null", ele vai ser do tipo [option](https://caml.inria.fr/pub/docs/manual-ocaml/libref/Option.html).
-Para falar mais sobre como option funciona, eu vou precisar fazer uma leve introdução sobre [variant types](https://dev.realworldocaml.org/variants.html).
 
-### O que são?
+### 5.1 O variant type option
 
-Variant types são muito comuns em linguagens funcionais como OCaml. Elas não são tão conhecidas pelos desenvolvedores de linguagens como
-Java, JS e C#. No entanto, é um tipo de dado muito poderoso e uma das features mais importantes de OCaml.
+Para entender esta seção, é necessário que você tenha entendido a seção anterior sobre variant types. Isso acontece, pois a forma como Reason trata valores nuláveis, é através
+de um variant type que vem por padrão na linguagem, chamado __option__
 
-A primeira vista, variants podem ser vistas como as enums presentes em TypeScript, mas não se engane, apesar da semelhança elas são muito mais que isso
-e abrem uma série de técnicas e possibilidades que te guiam a modelar seu software de uma maneira muito mais coerente.
 
-### Como utilizar?
-
-Vamos a um primeiro exemplo de uso de variant types:
-
-```reason 
-  type status =  | Loading | Error | Success;
-
-  let currentStatus = Loading;
-```
-
-O código acima, é a declaração de um variant type que pode conter 3 valores: __Loading, Error__ e __Success__. Em seguida atribuimos a variável
-**currentStatus**, o valor **Loading**. Essa variável automaticamente se torna do tipo **status**, ou seja, ela poderia tanto ter o valor **Loading**, quanto
-**Error** ou **Success**. É possível ver a aplicação desse tipo de dado, em um simples caso como esse exemplo abaixo:
-
-_Pense que o status atual de uma das telas da sua aplicação, está armazenado nessa variável **currentStatus**. Com variant type, você
-consegue de forma idiomática, mapear todos os estados desta tela, sendo eles: **Loading, Error** ou **Success**. 
-Pense agora que para cada uma dessas possibilidades, teremos uma mensagem de texto para exibir ao usuário:_
-- Loading = "Carregando!"
-- Error = "Erro!"
-- Success = "Tudo certo!"
-
-Em ReasonML, graças a combinação de variants e [pattern matching](https://reasonml.github.io/docs/en/pattern-matching), que não vou me aprofundar neste artigo, você consegue de forma muito declarativa
-realizar esse "de-para", veja:
+_Option_ ou _Maybe_ são bem comuns em algumas linguagens e talvez você já até tenha ouvido falar. Em ReasonML, essa estrutura de dados é representada através de variant types.
+Para deixar as coisas um poucos mais claras, se fosse necessário declararmos o tipo option, ele ficaria exatamente assim:
 
 ```reason
-
-let getStatusMessage = status => switch status {
-  | Loading => "Carregando..."
-  | Error => "Erro!"
-  | Success => "Tudo certo!"
-};
-
-// ...
-
-let currentStatus = Loading;
-let statusMessage = getStatusMessage(currentStatus); // Retorno: "Carregando..."
+type option('a) = | Some('a) | None;
 ```
-O que está acontecendo nessa função, é o seguinte: A função recebe um parâmetro do tipo status e, utilizando um __switch__, que embora seja parecido,
-não é um switch case como em JavaScript e sim a sintaxe de pattern matching que havia mencionado anteriormente, você consegue mapear cada possibilidade
-que o tipo status possui e dizer ao Reason "_para este tipo, você deve retornar esta string".
 
-Outra coisa essencial sobre variants, é que eles não somente podem ser utilizados como um "símbolo", mas também "segurar um valor" de um determinado tipo.
-Vejamos o exemplo abaixo:
-
-```reason
-type pet = | Dog(string) | Cat(string);
-```
-Observe que há um novo elemento nesse exemplo, além de declararmos os _constructors_ do variant __pet__, agora eles "possuem" um valor do tipo string, que nesse exemplo
-seria o nome de cada pet. Para utilizar um variant como esse poderíamos fazer algo assim:
-
-```reason
-let myPet = Dog("bob");
-```
-Se fossemos fazer uma função para obter o nome do pet, seja ele __Dog__ ou __Cat__, ficaria algo assim:
-```reason
-let getPetName = myPet => switch myPet {
-  | Dog(name) => "Dog =>" ++ name
-  | Cat(name) => "Cat =>" ++ name
-}
-```
-Da mesma forma como no exemplo anterior, é possível utilizar a sintaxe do pattern matching, para encontrar um padrão no valor e, de forma declarativa, 
-determinar que para _X_ possibilidade, retorne um valor _Y_. Isso é somente a forma mais básica de se utilizar pattern matching, poderíamos fazer algo mais granular ainda, veja:
-```reason
-let greeting = myPet => switch myPet {
-  | Dog("bob") => "Hello bob!"
-  | Dog(anotherName) => "Hi " ++ anotherName
-  | Cat(catName) => "The cat =>" ++ catName
-}
-```
-Observe que na primeira possibilidade, ao invés de passar um nome de variável, passei uma string _"bob"_, isso significa que se o valor de __myPet__, for __Dog("bob")__,
-ele irá retornar __"Hello bob!"__. Caso não seja este o valor, eu consigo ainda assim mapear essa possibilidade, onde não sei qual o nome de Dog e trata-la.
-Por isso se chama __pattern matching__, o intuito é encontrar um padrão e tratá-lo.
-
-Basicamente, essa é a forma que você irá declarar e trabalhar com variants. Nos próximos artigos, com certeza vou me aprofundar e entrar em mais detalhes 
-sobre esse tipo dado.
-
-### O variant type "option('a)"
-
-Bom, dada essa introdução e feito um entendimento sobre o que é e como utilizar variants, vou explicar de que forma, isso se relaciona a forma como ReasonML trata
-valores que possivelmente serão nulos ou undefined.
-
-Em OCaml, existe um variant type, que vem por padrão na linguagem, chamado **option**. Esse variant possui apenas duas possibilidades: _Some ou None_.
+Esse variant possui apenas duas possibilidades: _Some ou None_.
 Isso significa que quando tratamos um dado que pode ser undefined ou nulo, em Reason eles serão ou **Some**, algo ou alguma coisa,
-ou None, que seria nada ou vazio. O exemplo abaixo mostra como podemos aplicar isso:
+ou None, que seria nada ou vazio.
+
+_O __'a__ do código acima é muito semelhante ao generics bem conhecido em TypeScript, no entanto não é necessário anotar o tipo ao compilador._
+
+
+Observe atentamente o __'a__. Ele indica ao compilador que __Some__ segura algum valor de um tipo que ainda não sabemos, mas que será definido no momento da atribuíção.
+Para fazer uso dessa estrutura, analise o seguinte exemplo:
+
 
 ```reason
-let username = Some("Marcos")
-let email = None;
+let maybeName = Some("Marcos");
 ```
 
-Observe que assim como o variant __pet__, o constructor Some, também recebe um valor. No caso do __option__, esse tipo pode ser qualquer coisa,
-um número, uma string, um record ou uma lista. Isso é possível graças ao que conhecemos por __parameterized variant__, que basicamente me permite dizer ao compilador do Reason
-que meu variant type pode conter um tipo que eu ainda não sei, mas será definido na declaração do valor. Pensando nisso, se fosse necessário declarar o tipo __option__ 
-(o que não é, pois é um variant embutido na linguagem) ele ficaria assim:
+Isso indica ao compilador que maybeName, é um __Some__ que segura uma string, logo, ele irá substituir a informação que obteve com o __'a__ pelo tipo __string__. Sendo assim,
+__maybeName__ agora é do tipo __option(string)__.
 
-```reason
-type option('a) =  
-| Some('a)
-| None;
-```
-Observe atentamente o __'a__. Ele indica ao compilador que nosso variant possui algum valor de um tipo que ainda não sabemos, mas que será definido no momento da declaração.
-No entanto, isso não significa que podemos tratar um valor do option, como um Some que possui um valor string em certos momentos e em outros pode possuir um valor do tipo _int_.
-Veja o exemplo abaixo, para entender um pouco melhor o que quero dizer:
-```reason
-let getSomething = value => switch value {
-  | Some("Marcos") => "Hello Marcos"
-  | Some(10) => "10" // Essa possibilidade não permite que o código compile
-  | Some(name) => "Hello " ++ _name_
-  | None => "Hello!"
-}
-```
+### 5.2 Como utilizar?
 
-Se você tentar esse tipo de expressão, o compilador irá imprimir a seguinte mensagem:
+Bom, vimos como podemos definir que algo pode ser null ou undefined. Mas ainda não mostrei, como é possível acessar e trabalhar com esses valores. Mais uma vez,
+o pattern matching entra em ação.
+
+Para dar um exemplo mais prático, imagine o seguinte cenário: 
+
+Você possui uma função que faz um requisição http e retorna um __record__ do tipo __person__. No entanto você não tem certeza de que o retorno da API vai ser sempre um JSON,
+que irá refletir os mesmo valores que person. Requisições http, são um efeito colateral, um "contato com o mundo externo", algo que você não controla. Logo, a resposta da API pode ser nula,
+e o dado que você espera renderizar na tela, na verdade é null ou undefined. Para evitar que você quebre sua aplicação ou renderize algum valor inesperado, podemos definir que a resposta da API, será
+do tipo __option__.
+
+Observe atentamente o exemplo abaixo:
 
 ```javascript
-  1 │ let getSomething = value => switch value {
-  2 │   | Some("Marcos") => "Hello Marcos!"
-  3 │   | Some(->10<-)=> "10"
-  4 │   | Some(name) => "Hello " ++ name
-  5 │   | None => "Hello!"
-  
-  This pattern matches values of type
-    ->int<-
-  but a pattern was expected which matches values of type
-    string
-```
-Isso é o que garante que você está sempre trabalhando o tipo de dado correto. Se você em sua expressão, deixa explícito ao compilador, que você está trabalhando
-com um __Some(string)__, o mesmo irá inferir qualquer outra possibilidade para valores do tipo string e assim sucessivamente para todos os outros tipos existentes na linguagem.
+type person = {
+  name: string
+};
 
-Veja mais um exemplo, onde temos um option que possuirá um valor do tipo __person__:
+type apiResponse = option(person);
 
-```reason
-type person = { name: string, age: int };
+// algumas linhas depois
 
-```
-Agora pense que esse tipo person, vem na reposta de uma requisição http. Uma requisição http, é um "contato com o mundo externo", é algo que você não controla, logo 
-a resposta pode ser um null ou undefined. Esse é o tipo de situação ideal onde o option irá brilhar! Em JavaScript, seria necessário sempre verificar se __person__ não é nulo
-ou undefined, para que a aplicação ao tentar acessar alguma propriedade do objeto, não lance um erro em runtime e quebre a aplicação.
-Veja como em Reason, isso é fácil de evitar:
+let response = API.requestData();
 
-```reason
-let getPersonName = apiResponse => switch apiResponse {
-  | Some(person) => person.name
-  | None => "empty"
+let message = switch response {
+  | Some(person) => "O nome da pessoa é: " ++ person.name
+  | None => "Não há uma pessoa cadastrada"
 };
 ```
 
-Abstraindo a parte de como fazer requisições http com Reason, pense que _getPersonName_ receberá um parâmetro do tipo option e que possuirá um valor do tipo __person__.
-Caso __apiResponse__, seja nulo ou undefined por _N_ motivos externos, como uma requisição errada feita a API, nós conseguimos tratar essa possibilidade e impedir
-que erros de runtime acontençam. Caso você tente acessar diretamente o name, a partir da variável __apiResponse__, você terá o seguinte erro:
+Existem alguns pontos a serem destacados aqui:
 
-```javascript 
-  5 │ apiResponse.->name<-;
+- A primeira é que definimos o tipo __apiResponse__ como um __option(person)__, ou seja, um option que "segura" um valor do tipo __person__.
+- Abstraia a forma como é feita uma requisição em reason e imagine que __API.requestData()__, já nos retorna um valor do tipo __apiResponse__.
+- E por fim, antes de acessarmos diretamente o __name__ de person, devemos fazer um pattern matching para nos certificarmos de que a API de fato retornou um valor válido e não um valor nulo.
+
+Se tentarmos acessar diretamente a propriedade name, sem utilizar pattern matching, o compilador nos dará a seguinte mensagem:
+
+```javascript
+   9 │ let message = "O nome da pessoa é " ++ response.name;
+  10 │ 
   
   This has type:
-    option(person)
+    option('a)
   But somewhere wanted:
-    person
+    person  
 ```
 
-Isso significa que é impossível tentar acessar diretamente a propriedade __name__, já que o valor sempre será do tipo _option_.
+Isso significa que, sempre que trabalharmos com valores nuláveis, o compilador do Reason nos dirá. Esse tipo de feedback é essencial e previne que você tenha runtime errors, como os mencionados ao longo deste artigo.
 
+### 5.3 Considerações
+
+É possível obter resultados de certa forma semelhantes com TypeScrpt, mas nada que seja tão idiomático e _built-in_ como ReasonML. Caso você queira utilizar e tentar aplicar conceitos parecidos, vale a pena conferir
+a biblioteca [fp-ts]. Mas já adianto que nenhuma lib ou implementação para TS ou JS, chegará a resultados tão benéficios como os que vimos acima.
+
+É possível trabalhar com options, sem fazer uso de pattern matching, não abordei este tópico, mas caso você tenha interesse, pode ler a seção sobre [options](https://reasonml.org/apis/javascript/latest/belt/option) da documentação
+da [reasonml.org](reasonml.org).
 
 ## Conclusão
 Utilizando-se de variants, options, tipagem estática da linguagem OCaml e entre outras features como pattern matching, você será guiado 
-a modelar o seu software de uma maneira muito mais clara e coerente. Erros de runtime como os mencionados acima, podem e devem ser delegados
-como responsabilidade da linguagem. Além de te tornar produtivo e receber feedback do compilador durante o desenvolvimento, você ainda garante
-que tudo vai pra runtime, está sendo manipulado e tratado da maneira correta.
+a modelar o seu software de uma maneira muito mais clara e coerente. Erros de runtime como os mencionados ao longo deste artigo, podem e devem ser delegados
+como responsabilidade da linguagem. 
+
+Além de te tornar produtivo e receber feedback do compilador durante o desenvolvimento, você ainda garante
+que tudo vai que para _runtime_, está sendo manipulado e tratado da maneira correta.
 
 O artigo acabou ficando maior do que eu esperava, mas não consigo ver uma forma melhor de exibir os benefícios, de se adotar ReasonML ao invés de TS ou Flow.
 Certamente há uma série de features e técnicas funcionais que ainda nem mencionei, e que também dão um contraste entre ReasonML e as demais opções mencionadas.
@@ -472,12 +890,8 @@ Certamente há uma série de features e técnicas funcionais que ainda nem menci
 Tópicos e conceitos funcionais, pretendo abordar na série sobre como dar os primerios passos com ReasonML. Dessa forma consigo me aprofundar em alguns conceitos e outras
 coisas que passaram batidos por este artigo.
 
-A terceira e provavelmente última parte deste artigo, irá abordar somente ReasonML e React. A integração entre ReasonML e React, é um dos pontos mais fortes
-na adoção de ReasonML, como alternativa ao JavaScript e, no próximo post vou explicar um pouco mais sobre como essa integração ocorre e como ReasonML e React, 
-praticamente, nasceram um para o outro.
-
 Espero ter ajudado você a entender um pouco mais sobre ReasonML e OCaml, seu feedback é importante e faz toda a diferença para construção desses artigos!
 
 <hr />
 
-_Quer enviar um artigo para o blog do BlumenauJS ? Dá uma olhadinha no [repositório](https://github.com/blumenaujs/blog) do blog, é só seguir os passos da documentaçao e abrir um PR._
+_Encontrou algum erro ou quer enviar um artigo para o blog do BlumenauJS ? Dá uma olhadinha no [repositório](https://github.com/blumenaujs/blog) do blog, é só seguir os passos da documentaçao e abrir um PR._
