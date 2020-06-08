@@ -719,7 +719,7 @@ interface Pet {
 const someCat: Pet = { type: PetEnum.CAT }
 const someDog: Pet = { type: PetEnum.DOG, name: "billy" }
 const bob: Pet = { type: PetEnum.DOG, name: "bob" }
-const dogWithoutName: Pet = { type: PetEnum.POG } // Linha A
+const dogWithoutName: Pet = { type: PetEnum.DOG } // Linha A
 
 const petMessage = (somePet: Pet) => {
   switch (somePet.type) {
@@ -747,7 +747,7 @@ petMessage(dogWithoutName)
 ```
 A saída seria: __O nome deste cachorro é undefined__.
 
-_Antes que alguém critique este último exemplo, afirmando que não fiz uso de union types e types para os tipos __Dog__ e __Cat__, [aqui está um exemplo](https://www.typescriptlang.org/play/?ssl=1&ssc=1&pln=35&pc=2#code/KYOwrgtgBACsAuBRc0DeAoKUDCBBAKgDSZQAiA8gOLoC+668AngA7BkD2A5lALxQZYQAQwjAAXFADO8AE4BLEJ2JYmrCXCQpa9VW2xD4vfiV3qEySNoYs2Go6S5QAPjgMBuegGN2IaVPaiDpwSQUaoUCTCohIARABG7HExylCmsOYoAHQU1HTo3r6GkgHA+vASZWEmNmaakJl4+FYFfqzwALLAkpJCnGx8ABTFohq1AJS8AHzGWJIA7nLwngAWUEMlGpm6EwJYUJ5CkrYZ9TliJHtQADYIqcvAoXzDwHaHHJwel1hyAGZr8Pcgpkov0eHx4okYhMZAgwDIQFAYohpGwAJdQURgfZCFbsGQydiEKAJJIXPYw+BwhExchQEAlKAAEy68DYB1x+PYUHRMSgAGo7g8uMCRMAyQcjuk6hAGgRzl8oBSqYiAJLdLkgADHXPRkGxHIJUDYkjk0D1nAM7BiJDoNCAA) de como ficaria a mesma implementação fazendo uso dessas features.
+_Antes que alguém critique este último exemplo, afirmando que não fiz uso de union types e types para os tipos __Dog__ e __Cat__, [aqui está um exemplo](https://www.typescriptlang.org/play/?ssl=38&ssc=2&pln=1&pc=1#code/KYOwrgtgBACsAuBRc0DeAoKUDCBBAKgDSZQAiA8gOLoC+668AngA7BkD2A5lALxQZYQAQwjAAXFADO8AE4BLEJ2JYmrCXCQoAdBWp0GLNtiHxe-EqvGwEySFrz5a9S9dN9SXKAB8cJgNz0AMbsINJS7KIenBJRZqhQJMKiEgBEAEbsaSnKUJbqNtq6TujBoaYAJlwA6nLw7GDwAHIibHwCuYb5mnZF+qVhkhHAxvASI3EWna62EPYExf2mrPAAssCSkkKcrVAAFIOiGl0AlLwAfOZYkgDutYEAFnsHwBpalqftWIFCkmwaMzoqGISFgsHIAGZPIavJKtHh8dKZFKnGQIMAyEBQFKIaRsACXUFEYCg3we7BkMnYhCgGSyINBqPg6MxKXIUBAQyg5XW8DYpPu5MpUAJKSgAGpwocEFpYfTvr9ptoHMDQQy0RisQBJDbsdkAY91BMgJKEZIpurYkjk0GNnBM7BSJDoNCAA) de como ficaria a mesma implementação fazendo uso dessas features.
 Para um exemplo muito simples como este, de fato, não haveriam problemas com valores nuláveis, no entanto, ainda não se compara com a declaratividade que ReasonML possui, fazendo uso de pattern matching. Ainda mais em situações
 reais e com casos de usos mais complexos, do que os apresentados acima._
 
@@ -768,11 +768,12 @@ let petMessage = somePet => switch somePet {
   | Cat => "Isso não é um cachorro e sim um gato"
 };
 ```
-Veja, como isso é idiomático na linguagem. Não precisei adicionar nenhum condicional, apenas determinei quais padrões existem e quais saídas elas teriam. Também é impossível que haja um __Dog__ sem name, pois só é possível 
-utilizar o constructor __Dog__, se passado uma __string__ como o valor a ser "segurado".
+Veja, como isso é idiomático na linguagem. Não precisei adicionar nenhum condicional, apenas determinei quais padrões existem e quais saídas elas teriam. 
 
-Outra clara vantagem é delegar ao compilador a responsabilidade de me avisar se estou tratando todos os casos possíveis, como por exemplo: Não mapear o caso de o pet ser um __Cat__ e entre outras situações.
+Outro ponto importante a destacar, é que em Reason, é impossível criar um __Dog__ sem um nome, como ocorre no exemplo com TypeScript. Isso acontece porque sempre ao utilizar o constructor __Dog__, o compilador
+te obriga a informar um valor do __string__, que seria o nome do pet.
 
+Outra clara vantagem, é delegar ao compilador a responsabilidade de me avisar se estou tratando todos os casos possíveis, como por exemplo: Não mapear o caso de o pet ser um __Cat__ e entre outras situações.
 
 ### 4.3 Considerações
 
@@ -901,9 +902,9 @@ Espero ter ajudado você a entender um pouco mais sobre ReasonML e OCaml, seu fe
 - [Pattern Matching](https://reasonml.github.io/docs/en/pattern-matching)
 - [Variant Types](https://reasonml.github.io/docs/en/variant)
 - [Algebraic Data Types](https://blog.luan.raithz.com/algebraic-data-types/) - Artigo muito didático do Luan Raithz, sobre ADT's
-- [Handling Optional Values](https://medium.com/astrocoders/handling-optional-values-in-reasonml-with-belt-option-7e907819074b) - Artigo muito bacana do Gabriel Rubens, sobre como utilizar a stdlib de Reason para trabalhar options
+- [Handling Optional Values](https://medium.com/astrocoders/handling-optional-values-in-reasonml-with-belt-option-7e907819074b) - Artigo muito bacana do Gabriel Rubens, sobre como utilizar a stdlib de Reason para trabalhar com options
 - [Functional Programming with OCaml](https://ocaml.org/learn/tutorials/functional_programming.html) - Seção sobre programação funcional no site oficial do OCaml
-- [ReasonML Docs](https://reasonml.github.io/)
+- [ReasonML Docs](https://reasonml.github.io/) - Documentação oficial do ReasonML
 - [reasonml.org](http://reasonml.org/) - Documentação alternativa de ReasonML, criada pela reasonml.org
 - [BuckleScript Docs](https://bucklescript.github.io/) - Documentação oficial do compilador do ReasonML
 
