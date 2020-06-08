@@ -7,8 +7,8 @@ excerpt: Neste artigo basicamente irei explicar porque você deveria adotar Reas
 ---
 
 Este artigo é parte de uma série de 2 artigos sobre "O que é e porque utilizar ReasonML?"
-- [Parte 1](https://blog.blumenaujs.org/o-que-e-e-porque-utilizar-reasonml-parte-1)
-- [Parte 2](https://blog.blumenaujs.org/o-que-e-e-porque-utilizar-reasonml-parte-2)
+- [Parte 1](https://blog.blumenauJavaScript.org/o-que-e-e-porque-utilizar-reasonml-parte-1)
+- [Parte 2](https://blog.blumenauJavaScript.org/o-que-e-e-porque-utilizar-reasonml-parte-2)
 
 ## Introdução
 
@@ -56,27 +56,26 @@ de situação, e o que começou como uma simples _"característica"_ da linguage
 Bom, existem algumas formas de você evitar que esses erros aconteçam. Uma delas e a mais comum é  *programar de forma defensiva,* o que é péssimo, 
 pois no fim, você acaba se preocupando com coisas que não necessariamente você deveria se preocupar, como: _validar se você está somando valores do 
 tipo *number* com *strings*, tentar executar um *.map* em algo que não é um *array*_ e entre outras situações comuns para desenvolvedores JavaScript.
-Por outro lado, existe um esforço em criar ferramentas que cuidem desses detalhes para você, por exemplo linters ou supersets como o TypeScript. 
-Certamente utilizar essas ferramentas ou supersets, vão te ajudar a evitar a passar por esses erros de runtime. 
+Por outro lado, existe um esforço em criar ferramentas que cuidem desses detalhes para você, por exemplo linters ou superseTypeScript como o TypeScript. 
+Certamente utilizar essas ferramentas ou superseTypeScript, vão te ajudar a evitar a passar por esses erros de runtime. 
 
 Nesse momento, você que está lendo este artigo, se é adepto e já trabalha com TypeScript nos seus projetos, deve estar pensando que ele já é suficiente para
 evitar esse tipo de erro mencionado acima. Porém, mesmo com TypeScript, você provavelmente vai acabar se deparando com problemas semelhantes, tendo em vista
 que o mesmo é apenas um superset para o JavaScript e foi totalmente pensado em permitir uma adoção gradual de sua utilização em projetos. Isso significa que,
-provavelmente em algum momento você precisará utilizar o famigerado _any_ do TS, em suas aplicações.
+provavelmente em algum momento você precisará utilizar o famigerado _any_ do TypeScript, em suas aplicações.
 
 Entendo a motivação da equipe do TypeScript e, estou ciente de que ele foi pensado em ser mais flexível desde o início. Meu ponto aqui é, TypeScript
 não resolve de fato todos os problemas relacionados a tipos e outras coisas mais, que nos deparamos ao escrever aplicações JavaScript.
 
 TypeScript é apenas um superset, portanto, ele apenas adiciona uma série de features ao JavaScript, e o sistema de tipos é uma dessas features.
 Um dos maiores contrastes entre ReasonML e TypeScript, certamente é o sistema de tipos. De forma bem superficial, podemos dizer que TypeScript, apenas
-tenta adicionar tipos ao JavaScript. Isso torna a adoção de TypeScript muito fácil aos desenvolvedores JS. Porém, por ser um superset, ele possui
+tenta adicionar tipos ao JavaScript. Isso torna a adoção de TypeScript muito fácil aos desenvolvedores JavaScript. Porém, por ser um superset, ele possui
 algumas desvantagens em relação a uma linguagem totalmente nova, já que ele herda também os problemas de design que JavaScript possui. 
 
 Pensando que o sistema de tipos de TypeScript foi projetado para se comportar de forma mais flexível e gradual, ele não vai te dar muitas garantias, você realmente
-não pode confiar 100% no seu sistema de tipos, o que é péssimo, já que a confiabilidade e a garantia de tipos, é a maior vantagem de se utilizar linguagens estaticamente
-tipadas.
+não pode confiar 100% no seu sistema de tipos, o que é péssimo, já que eliminar erros envolvendo o uso incorreto de tipos em compilação, é uma das maiores vantagens ao se utilizar linguagens estaticamente tipadas.
 
-Já ReasonML, traz uma abordagem diferente, ele foi criado com o propósito de tornar OCaml, uma linguagem mais familiar aos desenvolvedores JavaScript.
+Já ReasonML, traz uma abordagem diferente, ele foi criado com o propósito de tornar OCaml uma linguagem mais familiar aos desenvolvedores JavaScript.
 Por ser apenas uma sintaxe nova ao OCaml, Reason herda todas as features e decisões de design de uma linguagem funcional, compilada, _battle tested_, com um sistema de tipos poderoso e que
 evoluiu constantemente nos últimos 25 anos.
 
@@ -87,7 +86,7 @@ Isso, de longe é uma das maiores vantagens de se utilizar ReasonML, principalme
 de inferência, ainda sim é muito inferior ao que vemos em Reason. 
 
 Além disso vou abordar alguns tópicos e técnicas presentes em ReasonML e tentar exibir algo equivalente em TypeScript, para mostrar de fato
-as vantagens que Reason tem em relação a ele. Algumas coisas como pattern matching e variants, irei abordar de forma superficial. Porém, vou deixar
+as vantagens que Reason tem em relação a ele. Algumas coisas como pattern matching e varianTypeScript, irei abordar de forma superficial. Porém, vou deixar
 um material adicional no final do artigo, que com certeza vai te ajudar entender muito mais sobre esses tópicos. Em artigos futuros, pretendo abordar esses
 conceitos e técnicas, mas para isso preciso passar essa introdução a Reason.
 
@@ -213,7 +212,7 @@ const someStudent = {
 }
 ```
 
-Nesse exemplo, onde não há anotação de tipo para __someStudent__, o compilador do TS não consegue identificar que __someStudent__ é do tipo __Student__, portanto nos
+Nesse exemplo, onde não há anotação de tipo para __someStudent__, o compilador do TypeScript não consegue identificar que __someStudent__ é do tipo __Student__, portanto nos
 permite cometer um erro, atribuindo a __age__ um valor do tipo string. Para restringir e extrair o melhor do compilador, seria necessário anotar o tipo, como fizemos no primeiro exemplo.
 
 Já em Reason, isso é responsabilidade do compilador. Mesmo que eu não anote o tipo, o compilador sabe de qual tipo se trata aquele valor que está sendo atribuído.
@@ -269,7 +268,7 @@ ao que foi atribuído como valor a variável, ele dará como mensagem de erro qu
 record.
 
 Embora possa parecer uma coisa ruim não poder atribuir valores do tipo record, sem ter que criar um tipo, isso na verdade é uma vantagem. Reason, diferente de TypeScript,
-não utiliza o sistema de tipos, como só mais uma feature. Ele utiliza o sistema de tipos para te guiar a modelar seu software, de maneira que, você sempre denomine
+não utiliza o sistema de tipos como só mais uma feature. Ele utiliza o sistema de tipos para te guiar a modelar seu software, de maneira que, você sempre denomine
 e atribua tipos aos valores que você está manipulando. O sistema de tipos irá te guiar sempre e isso é uma enorme vantagem.
 
 
@@ -316,7 +315,7 @@ algumas diferenças e casos de uso melhores para cada uma das estruturas de dado
 </tbody>
 </table>
 
-Em contraste com TypeScript existe uma diferença crucial a ser mencionada. Lists e arrays, só podem armazenar elementos do mesmo __tipo__. Em TypeScript, encontramos essa flexibilidade, como podemos ver nos exemplos abaixo:
+Em contraste com TypeScript existe uma diferença crucial a ser mencionada. LisTypeScript e arrays, só podem armazenar elementos do mesmo __tipo__. Em TypeScript, encontramos essa flexibilidade, como podemos ver nos exemplos abaixo:
 
 __TypeScript__
 ```typescript
@@ -384,7 +383,7 @@ let greeting: string => string;
 
 Funções são features importantes em todas as linguagens e, nas funcionais, elas possuem muitas vantagens em relação a outras mais populares como JavaScript ou Java.
 Em ReasonML isso não é diferente, uma das features que o tornam mais poderoso, são as funções. As funções em ReasonML e assim como em outras linguagens funcionais possuem features como 
-[currying](https://reasonml.github.io/docs/en/function#currying) e [argumentos nomeados](https://reasonml.github.io/docs/en/function#labeled-arguments), que irei abordar nos próximos trechos.
+[currying](https://reasonml.github.io/docs/en/function#currying) e [argumentos nomeados](https://reasonml.github.io/docs/en/function#labeled-argumenTypeScript), que irei abordar nos próximos trechos.
 
 ### 2.1 Argumentos nomeados
 Argumentos nomeados apesar de serem pouco conhecidos por desenvolvedores JavaScript, não é algo novo. Algumas linguagens como Python e Ruby já possuem há um bom tempo.
@@ -627,37 +626,37 @@ em conhecer mais essa feature, vou deixar um material adicional no final do arti
 
 Como switch case é uma feature comum em linguagens mainstream, decidi não incluir exemplos de TypeScript. No entanto, o que posso ressaltar,
 é que de fato, pattern matching de Reason, tem inúmeras vantagens em relação ao seu "equivalente" em TypeScript. Switch case convencional não possui um grau de granularidade e condicionais tão idiomáticos
-como pattern matching possui. Para se chegar a um resultado semelhante em linguagens como TS ou JS, é necessário combinar switch e condicionais com if, o que pode e provavelmente vai ser péssimo para legibilidade.
+como pattern matching possui. Para se chegar a um resultado semelhante em linguagens como TypeScript ou JavaScript, é necessário combinar switch e condicionais com if, o que pode e provavelmente vai ser péssimo para legibilidade.
 
 
 
 *Existe uma proposta no __tc39__ para adicionar [pattern matching ao JavaScript](https://github.com/tc39/proposal-pattern-matching), vale a pena conferir.*
 
-## 4. Variants e Enums
+## 4. VarianTypeScript e Enums
 
 ### 4.1 O que são?
 
 Variant types são muito comuns em linguagens funcionais como OCaml. Elas não são tão conhecidas pelos desenvolvedores de linguagens como
-Java, JS e C#. No entanto, é um tipo de dado muito poderoso e uma das features mais importantes de OCaml.
+Java, JavaScript e C#. No entanto, é um tipo de dado muito poderoso e uma das features mais importantes de OCaml.
 
-A primeira vista, variants podem ser confundidas como as enums presentes em TypeScript, mas não se engane, apesar da semelhança, elas são muito mais que isso
+A primeira vista, varianTypeScript podem ser confundidas como as enums presentes em TypeScript, mas não se engane, apesar da semelhança, elas são muito mais que isso
 e abrem uma série de técnicas e possibilidades que te guiam a modelar seu software de uma maneira muito mais coerente.
 
 ### 4.2 Como utilizar?
 
 Existem basicamente duas formas de se utilizar variant types. A primeira, é utilizá-lo como "símbolo". Quando utilizado desta forma, se parecem muito com enums.
-Veja alguns exemplos de como seriam _"variants as symbols"_:
+Veja alguns exemplos de como seriam _"varianTypeScript as symbols"_:
 
 __ReasonML__
 ```reason 
 type status =  | Loading | Error | Success;
 
-let currentStatus = Loading;
+let currenTypeScripttatus = Loading;
 ```
 
 Até aqui nenhuma novidade em relação ao TypeScript. É possível declarar um enumerador, que funciona da mesma forma.
 
-Já a segunda forma, é muito mais interessante, pois podemos utilizar variants que _"seguram"_ um ou mais valores.
+Já a segunda forma, é muito mais interessante, pois podemos utilizar varianTypeScript que _"seguram"_ um ou mais valores.
 
 Para entender melhor, veja o exemplo abaixo:
 
@@ -665,7 +664,7 @@ Para entender melhor, veja o exemplo abaixo:
 type pet = | Dog(string) | Cat;
 ```
 
-Assim como no exemplo anterior, eu defini __2 constructors__ para meu type __pet__, sendo eles  __Dog__ e __Cat__. No entanto, neste exemplo, esses variants funcionam não como
+Assim como no exemplo anterior, eu defini __2 constructors__ para meu type __pet__, sendo eles  __Dog__ e __Cat__. No entanto, neste exemplo, esses varianTypeScript funcionam não como
 um símbolo, mas sim, como uma "caixinha" que segura valores. 
 
 Veja um exemplo de como utilizar esse variant type na prática:
@@ -747,11 +746,11 @@ petMessage(dogWithoutName)
 ```
 A saída seria: __O nome deste cachorro é undefined__.
 
-_Antes que alguém critique este último exemplo, afirmando que não fiz uso de union types e types para os tipos __Dog__ e __Cat__, [aqui está um exemplo](https://www.typescriptlang.org/play/?ssl=38&ssc=2&pln=1&pc=1#code/KYOwrgtgBACsAuBRc0DeAoKUDCBBAKgDSZQAiA8gOLoC+668AngA7BkD2A5lALxQZYQAQwjAAXFADO8AE4BLEJ2JYmrCXCQoAdBWp0GLNtiHxe-EqvGwEySFrz5a9S9dN9SXKAB8cJgNz0AMbsINJS7KIenBJRZqhQJMKiEgBEAEbsaSnKUJbqNtq6TujBoaYAJlwA6nLw7GDwAHIibHwCuYb5mnZF+qVhkhHAxvASI3EWna62EPYExf2mrPAAssCSkkKcrVAAFIOiGl0AlLwAfOZYkgDutYEAFnsHwBpalqftWIFCkmwaMzoqGISFgsHIAGZPIavJKtHh8dKZFKnGQIMAyEBQFKIaRsACXUFEYCg3we7BkMnYhCgGSyINBqPg6MxKXIUBAQyg5XW8DYpPu5MpUAJKSgAGpwocEFpYfTvr9ptoHMDQQy0RisQBJDbsdkAY91BMgJKEZIpurYkjk0GNnBM7BSJDoNCAA) de como ficaria a mesma implementação fazendo uso dessas features.
+_Antes que alguém critique este último exemplo, afirmando que não fiz uso de union types e types para os tipos __Dog__ e __Cat__, [aqui está um exemplo](https://www.typescriptlang.org/play/?ssl=38&ssc=2&pln=1&pc=1#code/KYOwrgtgBACsAuBRc0DeAoKUDCBBAKgDSZQAiA8gOLoC+668AngA7BkD2A5lALxQZYQAQwjAAXFADO8AE4BLEJ2JYmrCXCQoAdBWp0GLNtiHxe-EqvGwEySFrz5a9S9dN9SXKAB8cJgNz0AMbsINJavaScript7KIenBJRZqhQJMKiEgBEAEbsaSnKUJbqNtq6TujBoaYAJlwA6nLw7GDwAHIibHwCuYb5mnZF+qVhkhHAxvASI3EWna62EPYExf2mrPAAssCSkkKcrVAAFIOiGl0AlLwAfOZYkgDutYEAFnsHwBpalqftWIFCkmwaMzoqGISFgsHIAGZPIavJKtHh8dKZFKnGQIMAyEBQFKIaRsACXUFEYCg3we7BkMnYhCgGSyINBqPg6MxKXIUBAQyg5XW8DYpPu5MpUAJKSgAGpwocEFpYfTvr9ptoHMDQQy0RisQBJDbsdkAY91BMgJKEZIpurYkjk0GNnBM7BSJDoNCAA) de como ficaria a mesma implementação fazendo uso dessas features.
 Para um exemplo muito simples como este, de fato, não haveriam problemas com valores nuláveis, no entanto, ainda não se compara com a declaratividade que ReasonML possui, fazendo uso de pattern matching. Ainda mais em situações
 reais e com casos de usos mais complexos, do que os apresentados acima._
 
-Já em ReasonML, isso fica muito simples. Podemos combinar os variants e pattern matching, para modelarmos a nossa função, de forma que nenhum caso fique para trás e que não corramos o risco de obter saídas inesperadas.
+Já em ReasonML, isso fica muito simples. Podemos combinar os varianTypeScript e pattern matching, para modelarmos a nossa função, de forma que nenhum caso fique para trás e que não corramos o risco de obter saídas inesperadas.
 
 Veja:
 
@@ -777,8 +776,8 @@ Outra clara vantagem, é delegar ao compilador a responsabilidade de me avisar s
 
 ### 4.3 Considerações
 
-É possível utilizar variants que "segurem" outros tipos de dados como __records__ ou __listas__. Assim como na seção anterior, não adicionei mais casos de uso, para não deixar ainda maior a seção.
-Caso você se interesse mais por variants em Reason, vou deixar também um material adicional sobre isso no final do artigo.
+É possível utilizar varianTypeScript que "segurem" outros tipos de dados como __records__ ou __listas__. Assim como na seção anterior, não adicionei mais casos de uso, para não deixar ainda maior a seção.
+Caso você se interesse mais por varianTypeScript em Reason, vou deixar também um material adicional sobre isso no final do artigo.
 
 ## 5. Null, Undefined e Option
 
@@ -829,7 +828,7 @@ o pattern matching entra em ação.
 
 Para dar um exemplo mais prático, imagine o seguinte cenário: 
 
-Você possui uma função que faz um requisição http e retorna um __record__ do tipo __person__. No entanto você não tem certeza de que o retorno da API vai ser sempre um JSON,
+Você possui uma função que faz um requisição http e retorna um __record__ do tipo __person__. No entanto você não tem certeza de que o retorno da API vai ser sempre um JavaScriptON,
 que irá refletir os mesmo valores que person. Requisições http, são um efeito colateral, um "contato com o mundo externo", algo que você não controla. Logo, a resposta da API pode ser nula,
 e o dado que você espera renderizar na tela, na verdade é null ou undefined. Para evitar que você quebre sua aplicação ou renderize algum valor inesperado, podemos definir que a resposta da API, será
 do tipo __option__.
@@ -876,20 +875,20 @@ Isso significa que, sempre que trabalharmos com valores nuláveis, o compilador 
 ### 5.3 Considerações
 
 É possível obter resultados de certa forma semelhantes com TypeScrpt, mas nada que seja tão idiomático e _built-in_ como ReasonML. Caso você queira utilizar e tentar aplicar conceitos parecidos, vale a pena conferir
-a biblioteca [fp-ts](https://github.com/gcanti/fp-ts). Mas já adianto que nenhuma lib ou implementação para TS ou JS, chegará a resultados tão benéficios como os que vimos acima.
+a biblioteca [fp-TypeScript](https://github.com/gcanti/fp-TypeScript). Mas já adianto que nenhuma lib ou implementação para TypeScript ou JavaScript, chegará a resultados tão benéficios como os que vimos acima.
 
 É possível trabalhar com options, sem fazer uso de pattern matching, não abordei este tópico, mas caso você tenha interesse, pode ler a seção sobre [options](https://reasonml.org/apis/javascript/latest/belt/option) da documentação
 da [reasonml.org](reasonml.org).
 
 ## Conclusão
-Utilizando-se de variants, options, tipagem estática da linguagem OCaml e entre outras features como pattern matching, você será guiado 
+Utilizando-se de varianTypeScript, options, tipagem estática da linguagem OCaml e entre outras features como pattern matching, você será guiado 
 a modelar o seu software de uma maneira muito mais clara e coerente. Erros de runtime como os mencionados ao longo deste artigo, podem e devem ser delegados
 como responsabilidade da linguagem. 
 
 Além de te tornar produtivo e receber feedback do compilador durante o desenvolvimento, você ainda garante
 que tudo vai que para _runtime_, está sendo manipulado e tratado da maneira correta.
 
-O artigo acabou ficando maior do que eu esperava, mas não consigo ver uma forma melhor de exibir os benefícios, de se adotar ReasonML ao invés de TS ou Flow.
+O artigo acabou ficando maior do que eu esperava, mas não consigo ver uma forma melhor de exibir os benefícios, de se adotar ReasonML ao invés de TypeScript ou Flow.
 Certamente há uma série de features e técnicas funcionais que ainda nem mencionei, e que também dão um contraste entre ReasonML e as demais opções mencionadas.
 
 Tópicos e conceitos funcionais, pretendo abordar na série sobre como dar os primerios passos com ReasonML. Dessa forma consigo me aprofundar em alguns conceitos e outras
@@ -910,4 +909,4 @@ Espero ter ajudado você a entender um pouco mais sobre ReasonML e OCaml, seu fe
 
 <hr />
 
-_Encontrou algum erro ou quer enviar um artigo para o blog do BlumenauJS ? Dá uma olhadinha no [repositório](https://github.com/blumenaujs/blog) do blog, é só seguir os passos da documentaçao e abrir um PR._
+_Encontrou algum erro ou quer enviar um artigo para o blog do BlumenauJavaScript ? Dá uma olhadinha no [repositório](https://github.com/blumenauJavaScript/blog) do blog, é só seguir os passos da documentaçao e abrir um PR._
