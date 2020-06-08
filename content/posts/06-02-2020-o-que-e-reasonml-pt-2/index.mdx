@@ -612,7 +612,7 @@ let somePerson = {
 };
 
 let message = switch somePerson {
-  | { name: "Marcos", age } when age < 25 => "Marcos tem menos que 22 anos"
+  | { name: "Marcos", age } when age < 25 => "Marcos tem menos que 25 anos"
   | { name, age } => name ++ " : " ++ string_of_int(age)
 };
 ```
